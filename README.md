@@ -1,4 +1,4 @@
-canl-java-tomcat
-================
+EMI Common Authentication Library Tomcat plugin
+===============================================
 
-Common authentication library tomcat plugin
+Java library that allows the use of EMI common authentication library in Tomcat.

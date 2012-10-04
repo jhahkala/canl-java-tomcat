@@ -1,0 +1,82 @@
+This is a plugin for tomcat that uses emi common authentication library 
+for setting up the SSL connections and verifying the incoming user certificates.
+
+To use it you'll need to configure the tomcat server.xml file and copy the jars, 
+canl-1.x.x.jar, canl-tomcat-1.x.x.jar, commons-io.jar and bcprov-1.46.jar to the 
+/var/lib/tomcat6/common/ or to the  /var/lib/tomcat5/common/ directory.
+
+It appears that the internal structure has changed slightly in tomcat7 so this 
+will not work with tomcat7. 
+
+An example simple server.xml file for tomcat:
+
+<Server port="8005" shutdown="SHUTDOWN">
+  <Service name="Catalina">
+
+    <Connector port="8443" SSLEnabled="true"
+               maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+               enableLookups="false" disableUploadTimeout="true"
+               acceptCount="100" debug="0" scheme="https" secure="true"
+               sSLImplementation="eu.emi.security.canl.tomcat.CANLSSLImplementation"
+               truststore="/etc/grid-security/certificates"
+               hostcert="/etc/grid-security/hostcert.pem"
+               hostkey="/etc/grid-security/hostkey.pem"
+               updateinterval="3600000"
+               clientAuth="true" sslProtocol="TLS" 
+               crlcheckingmode="require"/>
+
+    <Engine name="Catalina" defaultHost="localhost">
+
+      <Host name="localhost" appBase="webapps" />
+    </Engine>
+  </Service>
+</Server>
+
+
+Mandatory attributes:
+- truststore
+directory where all the CA files are in PEM format. Optionally also 
+CRLs and namespaces are there.
+e.g. /etc/grid-security/certificates
+
+- hostcert
+the file that contains the host certificate.
+e.g. /etc/grid-security/tomcat-cert.pem
+
+- hostkey
+the file that contains the host key.
+e.g. /etc/grid-security/tomcat-key.pem
+
+
+Optional attributes:
+- updateinterval
+defines how often the system checks for changes in the trust store.
+By default changes are polled once per hour. The setting is a number
+of milliseconds between the updates.
+
+- crlcheckingmode
+the CRL checking mode. Default is that CRLs are required. If a CA 
+has no valid (not expired, present and valid) CRL, no certificates 
+from that CA are accepted. Other options are "ifvalid" and "ignore".
+"ifvalid" means that a valid CRL is taken into account, but if no 
+valid CRL for a CA is found, all certs from that CA are accepted.
+"ignore" means that the CRLs are ignored and all certificates that
+are validly issued by accepted CA are accepted.
+
+- proxysupport
+whether grid proxy certificates are accepted. By default the proxies
+are accepted. Setting this attribute to "no" disables proxy support
+and all proxies are rejected.
+
+- namespace
+configures the namespace checking. By default the certificates are 
+checked against EU Grid PMA namespace definitions, with fallback to
+Globus signing policy files. If neither are found for a CA, no 
+namespace cheking is done and all certificatest from that CA are
+accepted. Other options are "off" and "require". "off" means that
+no namespace checking is done. "require" means that succesful 
+namespace checking against either EU Grid PMA namesapce definition
+or Globus signing policy must be done. If no namespace definition is
+found, no certificates from that CA are accepted.
+
+   

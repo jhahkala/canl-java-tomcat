@@ -1,0 +1,20 @@
+Source: canl-java-tomcat
+Priority: extra
+Maintainer: Joni Hahkala <joni.hahkala@cern.ch>
+Build-Depends: debhelper (>= 7.0.50~), maven2, default-jdk
+Standards-Version: 3.9.2.0
+Section: java
+Homepage: https://twiki.cern.ch/twiki/bin/view/EMI/CANLTomcatPlugin
+Vcs-Git: https://github.com/jhahkala/canl-java-plugins.git
+Vcs-Browser: https://github.com/jhahkala/canl-java-plugins/tree/master/canl-java-tomcat
+
+Package: libcanl-java-tomcat
+Architecture: all
+Depends: default-jre-headless, lsb-base, libcanl-java, libbcprov, ${java:Depends}, ${misc:Depends}
+Recommends: ${java:Recommends}
+Description: Plugin that allows the use of EMI Common Authentication Library in tomcat.
+ A plugin for tomcat that allows the use of EMI Common 
+ Authenticaiton Library. The CANL library allows the 
+ use of legacy and RFC 3820 proxy certificates and 
+ includes many utilities that ease the use or credentials, 
+ especially when not in java jks format.

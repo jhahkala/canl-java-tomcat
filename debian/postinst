@@ -1,0 +1,24 @@
+#!/bin/sh
+if [ -d /var/lib/tomcat6 ] ; then
+	ln -sn /usr/share/java/canl-java-tomcat.jar /var/lib/tomcat6/common/[canl-java-tomcat].jar
+	
+	if [ -f /usr/share/java/bcprov.jar ] ; then 
+		ln -sn /usr/share/java/bcprov.jar /var/lib/tomcat6/common/[bcprov].jar
+	else
+		echo "/usr/share/java/bcprov.jar not found, cannot link it to the tomcat server/lib"
+	fi
+	
+# link the unversioned canl lib, and if not present, link the versioned jar file.
+# At the time of writing the unversioned link is missing.
+
+	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
+	if [ -f /usr/share/java/canl-java.jar ] ; then 
+		ln -sn /usr/share/java/canl-java.jar /var/lib/tomcat6/common/[canl-java].jar
+	elif [ -f ${canl_jar} ] ; then 
+		ln -sn ${canl_jar} /var/lib/tomcat6/common/[canl-java].jar
+	else
+		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
+	fi
+else
+	echo No tomcat6 installation found, link the necessary libraries to tomcat6/common yourself.
+fi
