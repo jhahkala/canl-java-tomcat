@@ -44,7 +44,12 @@ clean:
 	rm -rf target $(rpmbuild_dir) $(debbuild_dir) $(tmp_dir) *.tar.gz $(tgz_dir) $(rpm_dir) $(deb_dir) $(spec_file) $(spec_file).out
 
 tomcat:
-	sed -e 's#@@TOMCAT@@#${tomcat_ver}#g' $(spec_file).in > $(spec_file).out
+	if [ -d /usr/share/$(tomcat_ver) ] ; then \
+		sed -e 's#@@TOMCAT@@#${tomcat_ver}#g' $(spec_file).in > $(spec_file).out; \
+	else \
+		echo Tomcat detection failed ;\
+		exit 2;\
+	fi
 
 
 spec: tomcat
