@@ -20,7 +20,7 @@ BuildRequires: java-devel
 BuildRequires: maven
 
 Requires: java
-Requires: @@TOMCAT@@
+Requires: tomcat5 or tomcat6
 Requires: canl-java
 Requires: bcprov
 
@@ -49,38 +49,46 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.md doc/RELEASE-NOTES doc/COPYRIGHT doc/LICENSE doc/USAGE
 
 %post
-if [ @@TOMCAT@@x == "tomcat5x" ] ; then
+tomcat_ver = $(shell basename /usr/share/tomcat?)
+if [ ! -d /usr/share/$(tomcat_ver) ] ; then 
+	echo Tomcat detection failed ;
+	exit 2;
+fi
+
+if [ $(tomcat_ver)x == "tomcat5x" ] ; then
 	ln -sn %{_datadir}/java/%{name}.jar /var/lib/tomcat5/server/lib/[%{name}].jar
 	if [ -f /usr/share/java/bcprov.jar ] ; then 
-		ln -sn /usr/share/java/bcprov.jar /var/lib/tomcat5/server/lib/[bcprov].jar
+		ln -snf /usr/share/java/bcprov.jar /var/lib/tomcat5/server/lib/[bcprov].jar
 	else
 		echo /usr/share/java/bcprov.jar not found, cannot link it to the tomcat server/lib
 	fi
+	# search for versioned canl jar, as no unversioned one exists at the moment.
+	# also somehow the stupid rebuild-jar-repository screws up the canl if "[" are used, so don't use them.
 	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
-	if [ -f /usr/share/java/canl-java.jar ] ; then 
-		ln -sn /usr/share/java/canl-java.jar /var/lib/tomcat5/server/lib/[canl-java].jar
+	if [ -f /usr/share/java/canl.jar ] ; then 
+		ln -snf /usr/share/java/canl.jar /var/lib/tomcat5/server/lib/canl-java.jar
 	elif [ -f ${canl_jar} ] ; then 
-		ln -sn ${canl_jar} /var/lib/tomcat5/server/lib/[canl-java].jar
+		ln -snf ${canl_jar} /var/lib/tomcat5/server/lib/canl-java.jar
 	else
 		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
 	fi
-elif [ @@TOMCAT@@x == "tomcat6x" ] ; then
+elif [ $(tomcat_ver)x == "tomcat6x" ] ; then
 	ln -sn %{_datadir}/java/%{name}.jar /usr/share/tomcat6/lib/[%{name}].jar
 	if [ -f /usr/share/java/bcprov.jar ] ; then 
-		ln -sn /usr/share/java/bcprov.jar /usr/share/tomcat6/lib/[bcprov].jar
+		ln -snf /usr/share/java/bcprov.jar /usr/share/tomcat6/lib/[bcprov].jar
 	else
 		echo "/usr/share/java/bcprov.jar not found, cannot link it to the tomcat server/lib"
 	fi
 	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
 	if [ -f /usr/share/java/canl-java.jar ] ; then 
-		ln -sn /usr/share/java/canl-java.jar /usr/share/tomcat6/lib/[canl-java].jar
+		ln -snf /usr/share/java/canl-java.jar /usr/share/tomcat6/lib/[canl-java].jar
 	elif [ -f ${canl_jar} ] ; then 
-		ln -sn ${canl_jar} /usr/share/tomcat6/lib/[canl-java].jar
+		ln -snf ${canl_jar} /usr/share/tomcat6/lib/[canl-java].jar
 	else
 		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
 	fi
 else
-	echo "invalid tomcat setting "@@TOMCAT@@", not linking jars to it's server/lib" >&2
+	echo "invalid tomcat setting $(tomcat_ver), not linking jars to it's server/lib" >&2
 fi
 
 
