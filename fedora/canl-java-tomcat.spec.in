@@ -20,7 +20,7 @@ BuildRequires: java-devel
 BuildRequires: maven
 
 Requires: java
-Requires: tomcat5 or tomcat6
+Requires(Hint): tomcat5 tomcat6
 Requires: canl-java
 Requires: bcprov
 
