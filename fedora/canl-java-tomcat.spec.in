@@ -20,7 +20,7 @@ BuildRequires: java-devel
 BuildRequires: maven
 
 Requires: java
-Requires(Hint): tomcat5 tomcat6
+Requires: @@TOMCAT@@
 Requires: canl-java
 Requires: bcprov
 
@@ -49,13 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.md doc/RELEASE-NOTES doc/COPYRIGHT doc/LICENSE doc/USAGE
 
 %post
-tomcat_ver = $(shell basename /usr/share/tomcat?)
-if [ ! -d /usr/share/$(tomcat_ver) ] ; then 
-	echo Tomcat detection failed ;
-	exit 2;
-fi
-
-if [ $(tomcat_ver)x == "tomcat5x" ] ; then
+if [ @@TOMCAT@@x == "tomcat5x" ] ; then
 	ln -sn %{_datadir}/java/%{name}.jar /var/lib/tomcat5/server/lib/[%{name}].jar
 	if [ -f /usr/share/java/bcprov.jar ] ; then 
 		ln -snf /usr/share/java/bcprov.jar /var/lib/tomcat5/server/lib/[bcprov].jar
@@ -72,7 +66,7 @@ if [ $(tomcat_ver)x == "tomcat5x" ] ; then
 	else
 		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
 	fi
-elif [ $(tomcat_ver)x == "tomcat6x" ] ; then
+elif [ @@TOMCAT@@x == "tomcat6x" ] ; then
 	ln -sn %{_datadir}/java/%{name}.jar /usr/share/tomcat6/lib/[%{name}].jar
 	if [ -f /usr/share/java/bcprov.jar ] ; then 
 		ln -snf /usr/share/java/bcprov.jar /usr/share/tomcat6/lib/[bcprov].jar
@@ -88,7 +82,7 @@ elif [ $(tomcat_ver)x == "tomcat6x" ] ; then
 		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
 	fi
 else
-	echo "invalid tomcat setting $(tomcat_ver), not linking jars to it's server/lib" >&2
+	echo "invalid tomcat setting "@@TOMCAT@@", not linking jars to it's server/lib" >&2
 fi
 
 
