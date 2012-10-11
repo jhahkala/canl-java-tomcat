@@ -49,7 +49,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.md doc/RELEASE-NOTES doc/COPYRIGHT doc/LICENSE doc/USAGE
 
 %post
-if [ x%{?dist} == xel6 ]; then
+if [ x%{?dist} == x.el6 ]; then
 	tomcat_ver = tomcat6
 else
 	tomcat_ver = tomcat5
@@ -92,16 +92,14 @@ fi
 
 
 %preun
-if [ @@TOMCAT@@x == "tomcat5x" ] ; then
+if [ x%{?dist} != x.el6 ]; then
 	rm -f /var/lib/tomcat5/server/lib/[bcprov].jar
 	rm -f /var/lib/tomcat5/server/lib/[%{name}].jar
 	rm -f /var/lib/tomcat5/server/lib/[canl-java].jar
-elif [ @@TOMCAT@@x == "tomcat6x" ] ; then
+else [ x%{?dist} == x.el6 ]; then
 	rm -f /usr/share/tomcat6/lib/[bcprov].jar
 	rm -f /usr/share/tomcat6/lib/[%{name}].jar
 	rm -f /usr/share/tomcat6/lib/[canl-java].jar
-else
-	echo "invalid tomcat setting "@@TOMCAT@@", not unlinking jars from it's server/lib" >&2
 fi
 
 
