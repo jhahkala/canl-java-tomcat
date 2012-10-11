@@ -61,6 +61,11 @@ if [ ${tomcat_ver}x == "tomcat5x" ] ; then
 	else
 		echo /usr/share/java/bcprov.jar not found, cannot link it to the tomcat server/lib
 	fi
+	if [ -f /usr/share/java/commons-io.jar ] ; then 
+		ln -snf /usr/share/java/commons-io.jar /var/lib/tomcat5/server/lib/[commons-io].jar
+	else
+		echo /usr/share/java/commons-io.jar not found, cannot link it to the tomcat server/lib
+	fi
 	# search for versioned canl jar, as no unversioned one exists at the moment.
 	# also somehow the stupid rebuild-jar-repository screws up the canl if "[" are used, so don't use them.
 	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
@@ -78,6 +83,16 @@ elif [ ${tomcat_ver}x == "tomcat6x" ] ; then
 	else
 		echo "/usr/share/java/bcprov.jar not found, cannot link it to the tomcat server/lib"
 	fi
+	if [ -f /usr/share/java/commons-io.jar ] ; then 
+		ln -snf /usr/share/java/commons-io.jar /usr/share/tomcat6/lib/[commons-io].jar
+	else
+		echo "/usr/share/java/commons-io.jar not found, cannot link it to the tomcat server/lib"
+	fi
+	if [ -f /usr/share/java/commons-logging.jar ] ; then 
+		ln -snf /usr/share/java/commons-logging.jar /usr/share/tomcat6/lib/[commons-logging].jar
+	else
+		echo "/usr/share/java/commons-logging.jar not found, cannot link it to the tomcat server/lib"
+	fi
 	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
 	if [ -f /usr/share/java/canl-java.jar ] ; then 
 		ln -snf /usr/share/java/canl-java.jar /usr/share/tomcat6/lib/[canl-java].jar
@@ -93,12 +108,15 @@ fi
 
 %preun
 if [ x%{?dist} != x.el6 ]; then
-	rm -f /var/lib/tomcat5/server/lib/[bcprov].jar
 	rm -f /var/lib/tomcat5/server/lib/[%{name}].jar
-	rm -f /var/lib/tomcat5/server/lib/[canl-java].jar
+	rm -f /var/lib/tomcat5/server/lib/[bcprov].jar
+	rm -f /var/lib/tomcat5/server/lib/[commons-io].jar
+	rm -f /var/lib/tomcat5/server/lib/canl-java.jar
 else [ x%{?dist} == x.el6 ]; then
-	rm -f /usr/share/tomcat6/lib/[bcprov].jar
 	rm -f /usr/share/tomcat6/lib/[%{name}].jar
+	rm -f /usr/share/tomcat6/lib/[bcprov].jar
+	rm -f /usr/share/tomcat6/lib/[commons-io].jar
+	rm -f /usr/share/tomcat6/lib/[commons-logging].jar
 	rm -f /usr/share/tomcat6/lib/[canl-java].jar
 fi
 
