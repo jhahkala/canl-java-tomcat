@@ -38,13 +38,18 @@ public class CANLSSLImplementation extends SSLImplementation {
         InputStream in = null;
         Properties props = null;
         try {
-            this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl/pom.properties");
+            in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl/pom.properties");
             props = new Properties();
             props.load(in);
-            System.out.println("Tomcat pluging with canl v" + props.getProperty("version") + " starting.");
+            String canlVersion = props.getProperty("version");
+            in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl-java-tomcat/pom.properties");
+            props = new Properties();
+            props.load(in);
+            String canlTomcatVersion = props.getProperty("version");
+            System.out.println("Tomcat pluging version " + canlTomcatVersion + " with canl v" + canlVersion + " starting.");
         } catch (Exception e) {
             System.out.println("Canl tomcat plugin starting, canl version information loading failed. "
-                    + in + ", " + props);
+                    + in + ", " + props + " exception: " + e + ": " + e.getMessage());
         }
         // Check to see if canl is floating around
         // somewhere, will fail if it is not found throwing
