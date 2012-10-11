@@ -50,6 +50,7 @@ public class CANLSSLImplementation extends SSLImplementation {
         } catch (Exception e) {
             System.out.println("Canl tomcat plugin starting, canl version information loading failed. "
                     + in + ", " + props + " exception: " + e + ": " + e.getMessage());
+            e.printStackTrace();
         }
         // Check to see if canl is floating around
         // somewhere, will fail if it is not found throwing
