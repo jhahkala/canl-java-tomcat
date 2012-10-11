@@ -42,12 +42,28 @@ public class CANLSSLImplementation extends SSLImplementation {
             props = new Properties();
             props.load(in);
             String canlTomcatVersion = props.getProperty("version");
-            in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl/pom.properties");
+            System.out.println("Tomcat pluging version " + canlTomcatVersion + " starting.");
+        } catch (Exception e) {
+            System.out.println("Canl tomcat plugin starting, version information loading failed. "
+                    + in + ", " + props + " exception: " + e + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+        try {
+            in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl-java-tomcat/pom.properties");
             props = new Properties();
             props.load(in);
-            String canlVersion = props.getProperty("version");
-            System.out.println("Tomcat pluging version " + canlTomcatVersion + " with canl v" + canlVersion + " starting.");
+            String canlTomcatVersion = props.getProperty("version");
+            System.out.println("CANL version " + canlTomcatVersion + " starting.");
         } catch (Exception e) {
+            try {
+                in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.emi.security/canl-java-tomcat/pom.properties");
+                props = new Properties();
+                props.load(in);
+                String canlTomcatVersion = props.getProperty("version");
+                System.out.println("CANL version " + canlTomcatVersion + " starting.");
+            } catch (Exception ex) {
+                //ignore if the fallback fails.
+            }
             System.out.println("Canl tomcat plugin starting, canl version information loading failed. "
                     + in + ", " + props + " exception: " + e + ": " + e.getMessage());
             e.printStackTrace();
