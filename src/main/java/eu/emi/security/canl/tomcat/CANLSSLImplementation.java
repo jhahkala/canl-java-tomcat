@@ -66,8 +66,9 @@ public class CANLSSLImplementation extends SSLImplementation {
                 props.load(in);
                 String canlVersion = props.getProperty("version");
                 System.out.println("CANL version " + canlVersion + " starting.");
-            } catch (Exception ex) {
                 oldSuccess = true;
+            } catch (Exception ex) {
+                // ignore failure in fallback
             }
             if (!oldSuccess) {
                 System.out.println("Canl tomcat plugin starting, canl version information loading failed. " + in + ", "
