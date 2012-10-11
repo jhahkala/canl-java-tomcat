@@ -43,16 +43,8 @@ all: package
 clean:
 	rm -rf target $(rpmbuild_dir) $(debbuild_dir) $(tmp_dir) *.tar.gz $(tgz_dir) $(rpm_dir) $(deb_dir) $(spec_file) $(spec_file).out
 
-tomcat:
-	if [ -d /usr/share/$(tomcat_ver) ] ; then \
-		sed -e 's#@@TOMCAT@@#${tomcat_ver}#g' $(spec_file).in > $(spec_file).out; \
-	else \
-		echo Tomcat detection failed ;\
-		exit 2;\
-	fi
 
-
-spec: tomcat
+spec:
 	@echo "Setting version and release in spec file: $(version)-$(release)"
 	sed -e 's#@@VERSION@@#$(version)#g' -e 's#@@RELEASE@@#$(release)#g' $(spec_file).out > $(spec_file)
 

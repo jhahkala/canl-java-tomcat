@@ -19,8 +19,13 @@ BuildArch: noarch
 BuildRequires: java-devel
 BuildRequires: maven
 
+%if %{?el6}
+Requires: tomcat6
+%else
+Requires: tomcat5
+%endif 
+
 Requires: java
-Requires: @@TOMCAT@@
 Requires: canl-java
 Requires: bcprov
 
