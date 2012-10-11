@@ -49,18 +49,18 @@ public class CANLSSLImplementation extends SSLImplementation {
             e.printStackTrace();
         }
         try {
-            in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl-java-tomcat/pom.properties");
+            in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.eu-emi.security/canl/pom.properties");
             props = new Properties();
             props.load(in);
-            String canlTomcatVersion = props.getProperty("version");
-            System.out.println("CANL version " + canlTomcatVersion + " starting.");
+            String canlVersion = props.getProperty("version");
+            System.out.println("CANL version " + canlVersion + " starting.");
         } catch (Exception e) {
             try {
-                in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.emi.security/canl-java-tomcat/pom.properties");
+                in = this.getClass().getClassLoader().getResourceAsStream("META-INF/maven/eu.emi.security/canl/pom.properties");
                 props = new Properties();
                 props.load(in);
-                String canlTomcatVersion = props.getProperty("version");
-                System.out.println("CANL version " + canlTomcatVersion + " starting.");
+                String canlVersion = props.getProperty("version");
+                System.out.println("CANL version " + canlVersion + " starting.");
             } catch (Exception ex) {
                 //ignore if the fallback fails.
             }
