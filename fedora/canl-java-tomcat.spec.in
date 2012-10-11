@@ -50,9 +50,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 if [ x%{?dist} == x.el6 ]; then
-	tomcat_ver = tomcat6
+	tomcat_ver=tomcat6
 else
-	tomcat_ver = tomcat5
+	tomcat_ver=tomcat5
 fi	
 if [ ${tomcat_ver}x == "tomcat5x" ] ; then
 	ln -sn %{_datadir}/java/%{name}.jar /var/lib/tomcat5/server/lib/[%{name}].jar
