@@ -112,7 +112,7 @@ if [ x%{?dist} != x.el6 ] ; then
 	rm -f /var/lib/tomcat5/server/lib/[bcprov].jar
 	rm -f /var/lib/tomcat5/server/lib/[commons-io].jar
 	rm -f /var/lib/tomcat5/server/lib/canl-java.jar
-else [ x%{?dist} == x.el6 ] ; then
+elif [ x%{?dist} == x.el6 ] ; then
 	rm -f /usr/share/tomcat6/lib/[%{name}].jar
 	rm -f /usr/share/tomcat6/lib/[bcprov].jar
 	rm -f /usr/share/tomcat6/lib/[commons-io].jar
