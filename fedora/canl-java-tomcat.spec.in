@@ -19,7 +19,7 @@ BuildArch: noarch
 BuildRequires: java-devel
 BuildRequires: maven
 
-%if %{?el6}
+%if 0%{?el6}
 Requires: tomcat6
 %else
 Requires: tomcat5
