@@ -43,6 +43,7 @@ import eu.emi.security.authn.x509.impl.X500NameUtils;
  * Tomcat.
  * 
  * Created on 2012-06-13
+ * 
  * @author Joni Hahkala
  */
 public class CANLSSLServerSocketFactory extends ServerSocketFactory {
@@ -69,7 +70,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
      * ServerSocket)
      */
     public Socket acceptSocket(ServerSocket sSocket) throws IOException {
-        
+
         SSLSocket asock = null;
 
         try {
@@ -78,12 +79,13 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
             String ip = asock.getInetAddress().toString();
             javax.security.cert.X509Certificate[] certs = asock.getSession().getPeerCertificateChain();
             String dn = null;
-            if (certs != null){
+            if (certs != null) {
                 dn = X500NameUtils.getReadableForm(certs[0].getSubjectDN().toString());
             }
             Date now = new Date();
-            
-            System.out.println(now.toString() + " : connection from " + ip + ((dn == null) ? " no certificate." : " dn: " + dn + "."));      
+
+            System.out.println(now.toString() + " : connection from " + ip
+                    + ((dn == null) ? " no certificate." : " dn: " + dn + "."));
         } catch (SSLException e) {
             throw new SocketException("SSL handshake error" + e.toString());
         }
@@ -164,8 +166,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
     /**
      * Initialize the SSL socket factory.
      * 
-     * @exception IOException
-     *                if an input/output error occurs
+     * @exception IOException if an input/output error occurs
      */
     private void initServerSocketFactory() throws IOException {
 
@@ -179,7 +180,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
                 }
             }
         };
-        
+
         ArrayList<StoreUpdateListener> listenerList = new ArrayList<StoreUpdateListener>();
         listenerList.add(listener);
 
@@ -231,36 +232,38 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
 
         OpensslCertChainValidator validator = new OpensslCertChainValidator(trustStoreLocation, namespaceMode,
                 intervalMS, validatorParams);
-        
+
         String hostCertLoc = (String) attributes.get("hostcert");
-        if(hostCertLoc == null){
-            throw new IOException("Variable hostcert undefined, cannot start server with SSL/TLS without host certificate.");
+        if (hostCertLoc == null) {
+            throw new IOException(
+                    "Variable hostcert undefined, cannot start server with SSL/TLS without host certificate.");
         }
-        java.security.cert.X509Certificate[] hostCertChain = CertificateUtils.loadCertificateChain(new FileInputStream(hostCertLoc), Encoding.PEM); 
-        
+        java.security.cert.X509Certificate[] hostCertChain = CertificateUtils.loadCertificateChain(new FileInputStream(
+                hostCertLoc), Encoding.PEM);
+
         String hostKeyLoc = (String) attributes.get("hostkey");
-        if(hostKeyLoc == null){
-            throw new IOException("Variable hostkey undefined, cannot start server with SSL/TLS without host private key.");
+        if (hostKeyLoc == null) {
+            throw new IOException(
+                    "Variable hostkey undefined, cannot start server with SSL/TLS without host private key.");
         }
-        PrivateKey hostKey = CertificateUtils.loadPrivateKey(new FileInputStream(hostKeyLoc), Encoding.PEM, null); 
-        
+        PrivateKey hostKey = CertificateUtils.loadPrivateKey(new FileInputStream(hostKeyLoc), Encoding.PEM, null);
+
         KeyAndCertCredential credentials;
         try {
             credentials = new KeyAndCertCredential(hostKey, hostCertChain);
         } catch (KeyStoreException e) {
             throw new IOException("Error while creating keystore: " + e + ": " + e.getMessage(), e);
         }
-        
+
         _serverSocketFactory = SocketFactoryCreator.getServerSocketFactory(credentials, validator);
-        
+
     }
 
     /**
      * Configures the given SSL server socket with the requested cipher suites
      * and need for client authentication.
      * 
-     * @param ssocket
-     *            the server socket to initialize.
+     * @param ssocket the server socket to initialize.
      */
     private void initServerSocket(ServerSocket ssocket) {
         LOGGER.debug("TMSSLServerSocketFactory.initServerSocket:");
@@ -289,8 +292,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
     /**
      * Configure whether the client authentication is wanted, needed or not.
      * 
-     * @param socket
-     *            The socket to configure
+     * @param socket The socket to configure
      */
     protected void configureClientAuth(SSLServerSocket socket) {
         String clientAuthStr = (String) attributes.get("clientauth");
@@ -311,8 +313,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
     /**
      * Configure whether the client authentication is wanted, needed or not.
      * 
-     * @param socket
-     *            The socket to configure
+     * @param socket The socket to configure
      */
     protected void configureClientAuth(SSLSocket socket) {
         String clientAuthStr = (String) attributes.get("clientauth");
