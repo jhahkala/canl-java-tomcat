@@ -272,7 +272,7 @@
 		<url>http://www.eu-emi.eu</url>
 	</organization>
 	<scm>
-		<url>https://github.com/argus-authz/argus-pep-common</url>
-		<connection>scm:git:https://github.com/argus-authz/argus-pep-common.git</connection>
+		<url>https://github.com/jhahkala/canl-java-tomcat.git</url>
+		<connection>scm:git:https://github.com/jhahkala/canl-java-tomcat.git</connection>
 	</scm>
 </project>
