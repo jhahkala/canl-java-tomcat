@@ -21,7 +21,7 @@ version=0.1.0
 release=1
 
 prefix=/
-deb_name=libcanl-java-tomcat
+deb_name=lib$(name)
 
 spec_file=fedora/$(name).spec
 maven_settings_file=project/maven-settings.xml
@@ -33,9 +33,8 @@ tmp_dir=$(CURDIR)/tmp
 tgz_dir=$(CURDIR)/tgz
 rpm_dir=$(CURDIR)/RPMS
 deb_dir=$(CURDIR)/debs
-tomcat_ver = $(shell basename /usr/share/tomcat?)
 
-.PHONY: clean tomcat spec dist package install srpm rpm deb deb-src
+.PHONY: clean spec dist package install srpm rpm deb deb-src
 
 all: package
 
