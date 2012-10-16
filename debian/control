@@ -14,7 +14,7 @@ Depends: default-jre-headless, lsb-base, libcanl-java, libbcprov, ${java:Depends
 Recommends: ${java:Recommends}
 Description: Plugin that allows the use of EMI Common Authentication Library in tomcat.
  A plugin for tomcat that allows the use of EMI Common 
- Authenticaiton Library. The CANL library allows the 
+ Authentication Library. The CANL library allows the 
  use of legacy and RFC 3820 proxy certificates and 
  includes many utilities that ease the use or credentials, 
  especially when not in java jks format.
