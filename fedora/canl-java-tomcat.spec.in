@@ -27,7 +27,6 @@ Requires: tomcat5
 
 Requires: java
 Requires: canl-java
-Requires: bcprov
 
 %description 
 Plugin that allows the use of EMI Common Authentication Library in tomcat.

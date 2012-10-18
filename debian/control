@@ -5,12 +5,12 @@ Build-Depends: debhelper (>= 7.0.50~), maven2, default-jdk
 Standards-Version: 3.9.2.0
 Section: java
 Homepage: https://twiki.cern.ch/twiki/bin/view/EMI/CANLTomcatPlugin
-Vcs-Git: https://github.com/jhahkala/canl-java-plugins.git
-Vcs-Browser: https://github.com/jhahkala/canl-java-plugins/tree/master/canl-java-tomcat
+Vcs-Git: https://github.com/jhahkala/canl-java-tomcat.git
+Vcs-Browser: https://github.com/jhahkala/canl-java-tomcat.git
 
 Package: libcanl-java-tomcat
 Architecture: all
-Depends: default-jre-headless, lsb-base, libcanl-java, libbcprov, ${java:Depends}, ${misc:Depends}
+Depends: default-jre-headless, lsb-base, libcanl-java, ${java:Depends}, ${misc:Depends}
 Recommends: ${java:Recommends}
 Description: Plugin that allows the use of EMI Common Authentication Library in tomcat.
  A plugin for tomcat that allows the use of EMI Common 
