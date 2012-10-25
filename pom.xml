@@ -6,11 +6,11 @@
 	<groupId>eu.eu-emi.security</groupId>
 	<artifactId>canl-java-tomcat</artifactId>
 	<version>0.1.1</version>
-	<packaging>jar</packaging>
 
 	<name>Common Auhtentication Library Tomcat plugin</name>
-	<url>http://maven.apache.org</url>
+	<url>https://twiki.cern.ch/twiki/bin/view/EMI/CANLTomcatPlugin</url>
 	<inceptionYear>2012</inceptionYear>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
