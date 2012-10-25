@@ -275,4 +275,8 @@
 		<url>https://github.com/jhahkala/canl-java-tomcat.git</url>
 		<connection>scm:git:https://github.com/jhahkala/canl-java-tomcat.git</connection>
 	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/jhahkala/canl-java-tomcat/issues</url>
+	</issueManagement>
 </project>
