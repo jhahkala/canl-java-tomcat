@@ -1,3 +1,7 @@
+canl-java-tomcat 0.1.1
+----------------------
+- update bcprov name in sl5 and deb to emi packaged one
+
 canl-java-tomcat 0.1.0
 ----------------------
 - initial release

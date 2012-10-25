@@ -126,6 +126,9 @@ fi
 
 
 %changelog
+* Thu Oct 25 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.1-1
+- update bcprov jar name to emi packaged one in sl5 and deb
+
 * Tue Sep 24 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.0-1
 - Initial release
 
