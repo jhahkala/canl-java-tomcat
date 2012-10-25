@@ -2,10 +2,10 @@
 if [ -d /var/lib/tomcat6 ] ; then
 	ln -sn /usr/share/java/canl-java-tomcat.jar /var/lib/tomcat6/common/[canl-java-tomcat].jar
 	
-	if [ -f /usr/share/java/bcprov.jar ] ; then 
-		ln -sn /usr/share/java/bcprov.jar /var/lib/tomcat6/common/[bcprov].jar
+	if [ -f /usr/share/java/bcprov-1.46.jar ] ; then 
+		ln -sn /usr/share/java/bcprov-1.46.jar /var/lib/tomcat6/common/[bcprov].jar
 	else
-		echo "/usr/share/java/bcprov.jar not found, cannot link it to the tomcat server/lib"
+		echo "/usr/share/java/bcprov-1.46.jar not found, cannot link it to the tomcat server/lib"
 	fi
 	
 # link the unversioned canl lib, and if not present, link the versioned jar file.
