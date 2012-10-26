@@ -71,9 +71,9 @@ install:
 	cp target/$(name)-$(version).jar $(DESTDIR)$(prefix)/usr/share/java
 	ln -snf $(DESTDIR)$(prefix)/usr/share/java/$(name)-$(version).jar $(DESTDIR)$(prefix)/usr/share/java/$(name).jar
 	chmod -f 0644 $(DESTDIR)$(prefix)/usr/share/java/$(name)-$(version).jar
-	mkdir -p $(DESTDIR)$(prefix)/usr/share/doc/canl-java-axis2-$(version)
-	cp -r doc/* $(DESTDIR)$(prefix)/usr/share/doc/canl-java-axis2-$(version)
-	chmod -Rf 0644 $(DESTDIR)$(prefix)/usr/share/doc/canl-java-axis2-$(version)/*
+	mkdir -p $(DESTDIR)$(prefix)/usr/share/doc/$(name)-$(version)
+	cp -r doc/* $(DESTDIR)$(prefix)/usr/share/doc/$(name)-$(version)
+	chmod -Rf 0644 $(DESTDIR)$(prefix)/usr/share/doc/$(name)-$(version)/*
 
 
 pre_rpmbuild:

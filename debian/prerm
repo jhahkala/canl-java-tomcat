@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 if [ -d /var/lib/tomcat6/ ] ; then
 	rm -f /var/lib/tomcat6/common/[bcprov].jar
 	rm -f /var/lib/tomcat6/common/[%{name}].jar
@@ -6,4 +7,4 @@ if [ -d /var/lib/tomcat6/ ] ; then
 else
 	echo No tomcat6 installation found, cannot remove the links to necessary jar files.
 fi
-	
+#DEBHELPER#

@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 if [ -d /var/lib/tomcat6 ] ; then
 	ln -sn /usr/share/java/canl-java-tomcat.jar /var/lib/tomcat6/common/[canl-java-tomcat].jar
 	
@@ -22,3 +23,4 @@ if [ -d /var/lib/tomcat6 ] ; then
 else
 	echo No tomcat6 installation found, link the necessary libraries to tomcat6/common yourself.
 fi
+#DEBHELPER#
