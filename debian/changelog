@@ -1,3 +1,9 @@
+canl-java-tomcat (0.1.2-1) unstable; urgency=low
+
+  * Initial release for Debian 
+
+ -- Joni Hahkala <joni.hahkala@cern.ch>  Fri, 26 Oct 2012 17:42:59 +0200
+
 canl-java-tomcat (0.1.1-1) unstable; urgency=low
 
   * Initial release for Debian 

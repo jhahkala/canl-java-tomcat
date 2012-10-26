@@ -5,7 +5,7 @@
 
 	<groupId>eu.eu-emi.security</groupId>
 	<artifactId>canl-java-tomcat</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 
 	<name>Common Auhtentication Library Tomcat plugin</name>
 	<url>https://twiki.cern.ch/twiki/bin/view/EMI/CANLTomcatPlugin</url>
