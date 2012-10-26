@@ -65,12 +65,15 @@ package: spec
 	@echo "Build with maven"
 	mvn -B -s $(maven_settings_file) package
 
-
 install:
 	@echo "Install binary in $(DESTDIR)$(prefix)"
-	test -f target/$(name)-$(version).tar.gz
-	mkdir -p $(DESTDIR)$(prefix)
-	tar -C $(DESTDIR)$(prefix) -xvzf target/$(name)-$(version).tar.gz
+	mkdir -p $(DESTDIR)$(prefix)/usr/share/java
+	cp target/$(name)-$(version).jar $(DESTDIR)$(prefix)/usr/share/java
+	ln -snf $(DESTDIR)$(prefix)/usr/share/java/$(name)-$(version).jar $(DESTDIR)$(prefix)/usr/share/java/$(name).jar
+	chmod -f 0644 $(DESTDIR)$(prefix)/usr/share/java/$(name)-$(version).jar
+	mkdir -p $(DESTDIR)$(prefix)/usr/share/doc/canl-java-axis2-$(version)
+	cp -r doc/* $(DESTDIR)$(prefix)/usr/share/doc/canl-java-axis2-$(version)
+	chmod -Rf 0644 $(DESTDIR)$(prefix)/usr/share/doc/canl-java-axis2-$(version)/*
 
 
 pre_rpmbuild:
