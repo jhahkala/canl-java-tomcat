@@ -34,7 +34,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>canl-java-tomcat</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -88,7 +87,6 @@
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
-						<phase>test</phase>
 						<goals>
 							<goal>jar</goal>
 						</goals>
@@ -108,19 +106,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<!-- overwrite default descriptor to use -->
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/fakeroot.xml</descriptor>
-						<!-- don't build source tarball with maven, use 'make dist' -->
-						<!-- <descriptor>src/main/assembly/src-tarball.xml</descriptor> -->
-					</descriptors>
-					<attach>false</attach>
-					<ignoreDirFormatExtensions>false</ignoreDirFormatExtensions>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -177,71 +162,6 @@
 		</plugins>
 	</reporting>
 
-	<profiles>
-		<profile>
-			<id>EMI</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>exec-maven-plugin</artifactId>
-						<version>1.2.1</version>
-						<executions>
-							<execution>
-								<id>create-emi-symlinks</id>
-								<phase>package</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<workingDirectory>${project.build.directory}/${project.build.finalName}-fakeroot.dir/usr/share/java</workingDirectory>
-									<executable>/bin/ln</executable>
-									<arguments>
-										<argument>-sfv</argument>
-										<argument>${project.build.finalName}-${project.version}.jar</argument>
-										<argument>${project.build.finalName}.jar</argument>
-									</arguments>
-								</configuration>
-							</execution>
-							<execution>
-								<id>create-emi-tarball</id>
-								<phase>package</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<workingDirectory>${project.build.directory}/${project.build.finalName}-fakeroot.dir</workingDirectory>
-									<executable>/bin/sh</executable>
-									<arguments>
-										<argument>${basedir}/src/main/build/emi-binary-tarball.sh</argument>
-										<argument>${project.build.finalName}-${project.version}</argument>
-									</arguments>
-								</configuration>
-							</execution>
-							<execution>
-								<id>delete-emi-symlinks</id>
-								<phase>pre-clean</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<workingDirectory>${project.build.directory}/${project.build.finalName}-fakeroot.dir</workingDirectory>
-									<executable>/bin/rm</executable>
-									<arguments>
-										<argument>-f</argument>
-										<argument>usr/share/java/${project.build.finalName}.jar</argument>
-									</arguments>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 	<description>EMI Common Authentication Library Tomcat Plugin</description>
 
 	<developers>
