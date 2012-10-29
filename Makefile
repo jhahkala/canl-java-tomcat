@@ -69,7 +69,8 @@ install:
 	@echo "Install binary in $(DESTDIR)$(prefix)"
 	mkdir -p $(DESTDIR)$(prefix)/usr/share/java
 	cp target/$(name)-$(version).jar $(DESTDIR)$(prefix)/usr/share/java
-	ln -snf $(DESTDIR)$(prefix)/usr/share/java/$(name)-$(version).jar $(DESTDIR)$(prefix)/usr/share/java/$(name).jar
+	@echo link jar to unversioned version
+	cd $(DESTDIR)$(prefix)/usr/share/java/;	ln -snf $(name)-$(version).jar $(name).jar
 	chmod -f 0644 $(DESTDIR)$(prefix)/usr/share/java/$(name)-$(version).jar
 	mkdir -p $(DESTDIR)$(prefix)/usr/share/doc/$(name)-$(version)
 	cp -r doc/* $(DESTDIR)$(prefix)/usr/share/doc/$(name)-$(version)
