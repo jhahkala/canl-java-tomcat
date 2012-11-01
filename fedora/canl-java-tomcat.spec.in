@@ -60,6 +60,7 @@ else
 fi	
 if [ ${tomcat_ver}x == "tomcat5x" ] ; then
 	ln -sn %{_datadir}/java/%{name}.jar /var/lib/tomcat5/server/lib/[%{name}].jar
+	# in sl5 we use emi distributed bouncycastle as the system one is too old for canl
 	if [ -f /usr/share/java/bcprov-1.46.jar ] ; then 
 		ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat5/server/lib/[bcprov].jar
 	else
@@ -126,13 +127,7 @@ fi
 
 
 %changelog
-* Thu Oct 26 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.2-1
-- polishing
-
-* Thu Oct 25 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.1-1
-- update bcprov jar name to emi packaged one in sl5 and deb
-
-* Tue Sep 24 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.0-1
+* Tue Nov 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.4-1
 - Initial release
 
 

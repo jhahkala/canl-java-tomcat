@@ -17,14 +17,14 @@
 
 name=canl-java-tomcat
 
-version=0.1.2
+version=0.1.4
 release=1
 
 prefix=/
 deb_name=lib$(name)
 
 spec_file=fedora/$(name).spec
-maven_settings_file=project/maven-settings.xml
+maven_settings_file=maven-settings.xml
 
 rpmbuild_dir=$(CURDIR)/rpmbuild
 debbuild_dir = $(CURDIR)/debbuild
@@ -54,7 +54,6 @@ dist: spec
 	mkdir -p $(tmp_dir)/$(name)-$(version)
 	cp Makefile README.md pom.xml $(tmp_dir)/$(name)-$(version)
 	cp -r debian fedora $(tmp_dir)/$(name)-$(version)
-	cp -r project $(tmp_dir)/$(name)-$(version)
 	cp -r doc $(tmp_dir)/$(name)-$(version)
 	cp -r src $(tmp_dir)/$(name)-$(version)
 	test ! -f $(name)-$(version).tar.gz || rm $(name)-$(version).tar.gz
