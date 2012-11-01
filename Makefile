@@ -52,7 +52,7 @@ dist: spec
 	@echo "Package the sources..."
 	test ! -d $(tmp_dir) || rm -fr $(tmp_dir)
 	mkdir -p $(tmp_dir)/$(name)-$(version)
-	cp Makefile README.md pom.xml $(tmp_dir)/$(name)-$(version)
+	cp Makefile README.md pom.xml maven-settings.xml $(tmp_dir)/$(name)-$(version)
 	cp -r debian fedora $(tmp_dir)/$(name)-$(version)
 	cp -r doc $(tmp_dir)/$(name)-$(version)
 	cp -r src $(tmp_dir)/$(name)-$(version)
