@@ -225,7 +225,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
         }
 
         String intervalString = (String) attributes.get("updateinterval");
-        long intervalMS = 3600000; // update ever hour
+        long intervalMS = 3600000; // update every hour
         if (intervalString != null) {
             intervalMS = Long.parseLong(intervalString);
         }

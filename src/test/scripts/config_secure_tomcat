@@ -1,0 +1,225 @@
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2004. 
+# See http://www.eu-egee.org/partners/ for details on the copyright 
+# holders.  
+#
+# Licensed under the Apache License, Version 2.0 (the "License"); 
+# you may not use this file except in compliance with the License. 
+# You may obtain a copy of the License at 
+#
+#    http://www.apache.org/licenses/LICENSE-2.0 
+#
+# Unless required by applicable law or agreed to in writing, software 
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS 
+# OF ANY KIND, either express or implied. 
+# See the License for the specific language governing permissions and 
+# limitations under the License.
+##############################################################################
+#
+# NAME :        config_secure_tomcat
+#
+# DESCRIPTION : This function configures tomcat
+#
+# AUTHORS :     Akos.Frohner@cern.ch
+#               Maria.Alandes.Pradillo@cern.ch
+#
+# NOTES :       This function is taken from the config_tomcat function written
+#               by Akos for FTS. It will be used in the future by all the modules
+#               that need to configure tomcat 
+#
+# YAIM MODULE:  glite-yaim-core
+#                 
+##############################################################################
+
+config_secure_tomcat_check () {
+ret=0
+ requires $1 GLITE_LOCATION TOMCAT_USER TOMCAT_HOSTCERT_LOCATION TOMCAT_HOSTKEY_LOCATION TRUSTMANAGER_CRL_UPDATE_INTERVAL X509_CERT_DIR
+ let "ret |= $?"
+
+ detect_tomcat
+ if [ -z ${TOMCAT_VERSION} ]; then
+    yaimlog ERROR "Tomcat is probably not installed !"
+    yaimlog ERROR "${YERRORSTR}"
+    let "ret |= 1"
+ fi
+
+return $ret
+}
+
+config_secure_tomcat_setenv () {
+
+   if [ "x${OS_TYPE}" = "xdebian" ]; then
+      source /etc/default/${TOMCAT_VERSION}
+      yaimgridenv_set CATALINA_HOME "/var/lib/${TOMCAT_VERSION}"
+      TOMCAT_SERVER_LIB=$CATALINA_HOME/common
+   else # SL
+      source /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf
+      source /etc/sysconfig/${TOMCAT_VERSION}
+      yaimgridenv_set CATALINA_HOME ${CATALINA_HOME}
+      [ -d ${CATALINA_HOME}/server/lib ] && TOMCAT_SERVER_LIB=${CATALINA_HOME}/server/lib
+      [ -d ${CATALINA_HOME}/lib ] && TOMCAT_SERVER_LIB=${CATALINA_HOME}/lib
+      yaimlog DEBUG "TOMCAT_SERVER_LIB 1111 = $TOMCAT_SERVER_LIB"
+   fi
+}
+
+config_secure_tomcat () {
+
+
+####@ Check whether tomcat and java are installed
+
+#yaimlog INFO "Check that java is installed"
+#if [ ! -f /etc/java/java.conf ]; then
+#  yestr ${YEX_NOSUCHFILE}
+#  yaimlog ERROR "/etc/java/java.conf doesn't exist. Java is probably not installed !"
+#  yaimlog ERROR "${YERRORSTR}"
+#  exit ${YEX_NOSUCHFILE}
+#fi
+
+yaimlog INFO "Stop tomcat in case it's running"
+/sbin/service ${TOMCAT_VERSION} stop 
+
+####@ Find Tomcat's webapps dir
+if [ ! -d "${CATALINA_BASE}/conf" ]; then
+    CATALINA_BASE=${CATALINA_HOME}
+fi
+if [ ! -d "${CATALINA_BASE}/conf" ]; then
+    CATALINA_BASE="/var/${TOMCAT_VERSION}"
+fi
+if [ ! -d "${CATALINA_BASE}/conf" ]; then
+    CATALINA_BASE="/var/lib/${TOMCAT_VERSION}"
+fi
+if [ ! -d "${CATALINA_BASE}/conf" ]; then
+    yaimlog ABORT "ERROR: Could not find CATALINA_BASE"
+    exit 1
+fi
+if [ ! -d "${CATALINA_BASE}/conf/Catalina/localhost" ]; then
+    yestr ${YEX_NOSUCHFILE}
+    yaimlog ERROR "Non default Tomcat installation,"
+    yaimlog ERROR "where the webapp configuration directory does not exist:"
+    yaimlog ERROR "${CATALINA_BASE}/conf/Catalina/localhost"
+    yaimlog ERROR "${YERRORSTR}"
+    exit ${YEX_NOSUCHFILE}
+fi
+
+
+####@ Check tomcat user exists
+id -u $TOMCAT_USER > /dev/null 2>&1
+if [ $? -ne 0 ] ; then
+  yaimlog ERROR "User ${TOMCAT_USER} doesn't exist."
+  yestr ${YEX_NOUSER}
+  yaimlog ERROR "${YERRORSTR}"
+  exit ${YEX_NOUSER}
+fi
+      
+####@ Copy the host certificates in tomcat
+yaimlog INFO "Copying hostcert to ${TOMCAT_HOSTCERT_LOCATION} for $TOMCAT_USER:root......"
+cp -f ${X509_HOST_CERT} ${TOMCAT_HOSTCERT_LOCATION}
+yaimlog INFO "Copying hostkey to ${TOMCAT_HOSTKEY_LOCATION} for $TOMCAT_USER:root..."
+cp -f ${X509_HOST_KEY} ${TOMCAT_HOSTKEY_LOCATION}
+chown $TOMCAT_USER:root ${TOMCAT_HOSTCERT_LOCATION}
+chown $TOMCAT_USER:root ${TOMCAT_HOSTKEY_LOCATION}
+chmod 644 ${TOMCAT_HOSTCERT_LOCATION}
+chmod 400 ${TOMCAT_HOSTKEY_LOCATION}
+
+
+####@ Configure the tomcat server itself
+
+####@ Replace server.xml with the one defining the secure connector
+yaimlog INFO "Configuring /etc/${TOMCAT_VERSION}/server.xml..."
+cp -f /etc/${TOMCAT_VERSION}/server.xml /etc/${TOMCAT_VERSION}/server.xml.original.emi.backup
+cat > /etc/${TOMCAT_VERSION}/server.xml << EOT
+<Server port="8005" shutdown="SHUTDOWN">
+  <Service name="Catalina">
+
+    <Connector port="8443"
+               maxThreads="150" minSpareThreads="25" maxSpareThreads="75"
+               enableLookups="false" disableUploadTimeout="true"
+               acceptCount="100" debug="0" scheme="https" secure="true"
+               sSLImplementation="eu.emi.security.canl.tomcat.CANLSSLImplementation"
+               truststore="${X509_CERT_DIR}"
+               hostcert="${TOMCAT_HOSTCERT_LOCATION}"
+               hostkey="${TOMCAT_HOSTKEY_LOCATION}"
+               updateinterval="${TRUSTMANAGER_CRL_UPDATE_INTERVAL}"
+               clientAuth="true" sslProtocol="TLS" 
+	       crlcheckingmode="require"
+               SSLEnabled="true"/>
+
+    <Engine name="Catalina" defaultHost="localhost">
+      <Host name="localhost" appBase="webapps" />
+    </Engine>
+  </Service>
+</Server>
+EOT
+chown $TOMCAT_USER:$TOMCAT_USER /etc/${TOMCAT_VERSION}/server.xml
+
+
+####@ Defining JAVA_HOME in the Tomcat configuration file
+yaimlog INFO "Defining JAVA_HOME in the Tomcat configuration file"
+
+if [ -f /usr/sbin/update-alternatives ]; then
+  JAVA_HOME=`/usr/sbin/update-alternatives --display java | grep 'link currently points to'| awk '{print $5}' | sed 's/\/bin\/java//'`
+else
+  yaimlog INFO "Using /etc/java/java.conf to deduce the value of JAVA_HOME"
+  # In case JAVA_HOME is defined using another variable like JAVA_JVM we need to source the file
+  source /etc/java/java.conf  
+  temp=`mktemp /tmp/javaconf.XXXXXX`
+  # Check if JAVA_HOME is commented or not
+  cat /etc/java/java.conf | grep -v ^# > ${temp}
+  if [ `grep -c ^JAVA_HOME ${temp}` -gt 1 ]; then
+     rm -rf ${temp}
+     yestr ${YEX_CONFIG}
+     yaimlog ERROR "YAIM is not able to deduce JAVA_HOME from /etc/java/java.conf"
+     yaimlog ERROR "There's more than one JAVA_HOME defined in /etc/java/java.conf"
+     yaimlog ERROR "${YERRORSTR}"
+     exit ${YEX_CONFIG}
+  fi
+  JAVA_HOME=`awk -F= '$1 == "JAVA_HOME" {print $2}' ${temp}`  
+  if [ "${JAVA_HOME}" ]; then
+    JAVA_HOME=`eval echo ${JAVA_HOME}`
+  else
+    cat /etc/java/java.conf | grep ^#JAVA_HOME= > ${temp}
+    if [ `grep -c ^#JAVA_HOME= ${temp}` -gt 1 ]; then
+      rm -rf ${temp}
+      yestr ${YEX_CONFIG}
+      yaimlog ERROR "YAIM is not able to deduce JAVA_HOME from /etc/java/java.conf"
+      yaimlog ERROR "There's more than one JAVA_HOME definition commented out"
+      yaimlog ERROR "${YERRORSTR}"
+      exit ${YEX_CONFIG}
+    fi
+    JAVA_HOME=`awk -F= '$1 == "#JAVA_HOME" {print $2}' /etc/java/java.conf`
+    if [ "${JAVA_HOME}" ]; then
+      JAVA_HOME=`eval echo ${JAVA_HOME}`
+    else
+      yestr ${YEX_MISSINGVAR}
+      yaimlog ERROR "No JAVA_HOME defined in /etc/java/java.conf"
+      yaimlog ERROR "${YERRORSTR}"
+      exit ${YEX_MISSINGVAR}
+    fi
+  fi
+  rm -rf ${temp}
+fi
+
+# Add JAVA_HOME if not already defined with the right value
+if [ ! `grep -q ^JAVA_HOME=${JAVA_HOME} /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf` ]; then
+  cp /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf.old    
+  # Comment existing definitions
+  sed -i 's/^JAVA_HOME/# The following line was commented out by yaim\n# JAVA_HOME/g' /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf 
+  echo "# JAVA_HOME defined by yaim in `date`" >> /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf
+  echo "JAVA_HOME=${JAVA_HOME}" >> /etc/${TOMCAT_VERSION}/${TOMCAT_VERSION}.conf
+fi
+
+####@ chkconfig Tomcat
+yaimlog DEBUG "Doing chkconfig for ${TOMCAT_VERSION}..."
+/sbin/chkconfig --add ${TOMCAT_VERSION}
+/sbin/chkconfig ${TOMCAT_VERSION} on
+
+####@ Restart Tomcat
+yaimlog INFO "Starting Tomcat"
+/sbin/service ${TOMCAT_VERSION} start
+
+return 0
+
+}
+
+

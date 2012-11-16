@@ -1,0 +1,216 @@
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2004.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        site-info.pre
+#
+# DESCRIPTION : This is a configuration file containing predefined values for variables
+#               used by many yaim modules.
+#
+# AUTHORS :     yaim-contact@cern.ch
+#               cristina.aiftimiei@pd.infn.it
+#
+# NOTES :       - site-info.pre variables can be overwritten by defining the same variable
+#                 in site-info.def
+#
+# YAIM MODULE:  glite-yaim-core
+#
+##############################################################################
+
+##########################
+# YAIM related variables #
+##########################
+
+# Base installation directory
+INSTALL_ROOT=/usr
+YAIM_ROOT=/opt
+
+# Repository settings
+# Be aware that the install option is only available for 3.0 services.
+# You can ignore this variables if you are configuring a 3.1 service.
+LCG_REPOSITORY="'rpm http://glitesoft.cern.ch/EGEE/gLite/APT/R3.0/ rhel30 externals Release3.0 updates'"
+CA_REPOSITORY="rpm http://repository.egi.eu/sw/production cas/1/current production"
+REPOSITORY_TYPE="apt"
+
+# This variable contains the path to the YAIM functions.
+# This is the standard location.
+FUNCTIONS_DIR=${YAIM_ROOT}/glite/yaim/functions
+
+################################
+# RGMA configuration variables #
+################################
+
+# RGMA Registry hostname. 
+REG_HOST=lcgic01.gridpp.rl.ac.uk
+
+#########################################
+# Batch system configuration variables  #
+#########################################
+
+# The path of the lrms commands 
+BATCH_BIN_DIR=/usr/bin
+
+################################
+# BDII configuration variables #
+################################
+
+# The timeout value to be used with a site BDII. 
+# It is the time the BDII will wait when querying resource BDIIs. 
+BDII_SITE_TIMEOUT=120
+
+# The timeout value to be used with a resource BDII. 
+#It is the time the BDII will wait when running the GIP. 
+BDII_RESOURCE_TIMEOUT=`expr "$BDII_SITE_TIMEOUT" - 5`
+
+# How long information in the cache is valid.  
+GIP_CACHE_TTL=300
+
+# If the information from the plug-ins is within this timelimit, 
+# the dynamics plug-ins will not be executed. 
+GIP_FRESHNESS=60
+
+# How long the GIP will wait for dynamic plug-ins to run 
+# before reading the information from the cache. 
+GIP_RESPONSE=`expr "$BDII_SITE_TIMEOUT" - 5`
+
+# The timeout value to be used with dynamic plug-ins. 
+GIP_TIMEOUT=150
+
+# Password for the LDAP database used by the bdii. 
+BDII_PASSWD=$(openssl rand -base64 12 || date +%m%d%H%M%S$$)
+
+# Time in seconds between updates of the bdii.
+BDII_BREATHE_TIME=120
+
+# Amount of time to wait until an information is assumed to have timed out. 
+BDII_READ_TIMEOUT=300
+
+# Number of dumps of the database to keep for debugging purposes. 
+BDII_ARCHIVE_SIZE=0 
+
+######################
+# User configuration #
+######################
+
+# The creation of groups and users needed by the middleware is done by YAIM.
+# The default value is "yes"
+# If you want to disable this functionality set it to "no"
+# You must ensure the users and groups defined in
+# $YAIM_ROOT/glite/yaim/examples/edgusers.conf are created in your system.
+# For the VO pool accounts, YAIM provides also an example file in
+# $YAIM_ROOT/glite/yaim/examples/users.conf. Even if you create your own users
+# you must provide a similar file that will be used to create the gridmap file.
+CONFIG_USERS=yes
+
+# NOTE: the home directories of the following special users are set by default under /home
+# Sys admins should consider using a safer location redifing the *_HOME_DIR variables below. 
+
+DPMMGR_USER=dpmmgr
+DPMMGR_GROUP=dpmmgr
+
+EDG_USER=edguser
+EDG_GROUP=edguser
+EDG_HOME_DIR=/home/edguser
+
+EDGINFO_USER=edginfo
+EDGINFO_GROUP=edginfo
+EDGINFO_HOME_DIR=/home/edginfo
+
+#no more needed for EMI
+#RGMA_USER=rgma
+#RGMA_GROUP=rgma
+
+GLITE_USER=glite
+GLITE_GROUP=glite
+# This variable needs to be defined with this default until bugs 
+# 52618, 52617 and 52563 are fixed.
+GLITE_HOME_DIR=/home/glite
+
+INFOSYS_GROUP=infosys
+
+BDII_USER=edguser
+BDII_GROUP=edguser
+BDII_HOME_DIR=/home/edguser
+
+TOMCAT_USER=tomcat
+
+###################################
+# General configuration variables #
+###################################
+
+# Directory where the trusted CA files are stored
+X509_CERT_DIR="/etc/grid-security/certificates/"
+CA_CERTIFICATES_DIR=${X509_CERT_DIR}
+
+# Site domain
+MY_DOMAIN=`hostname -d`
+
+# Location of the oracle libraries
+ORACLE_LOCATION="/usr/lib/oracle/10.2.0.3"
+
+# Output storage directory for the jobs
+OUTPUT_STORAGE=/tmp/jobOutput
+
+# Set this if you want a scratch directory for jobs
+EDG_WL_SCRATCH=""
+
+# Set this to '/dev/null' or some other dir if you want
+# to turn off yaim installation of cron jobs
+CRON_DIR=/etc/cron.d
+
+# Set this to 'yes' to publish the DENY tags. Otherwise it will only publish VO Views.
+# For more information contact your VO administrator or check
+# http://egee-intranet.web.cern.ch/egee-intranet/NA1/TCG/wgs/priority.htm
+FQANVOVIEWS=no
+
+# Reasonable default value for GLOBUS_TCP_PORT_RANGE
+GLOBUS_TCP_PORT_RANGE="20000,25000"
+
+# Set this if your WNs have a shared directory for temporary storage
+CE_DATADIR=""
+
+
+# The default architecture of a SE is miltidisk.
+SE_ARCH="multidisk" # "disk, tape, multidisk, other"
+
+# Security related variables
+# LCAS/LCMAPS debugging and logging levels
+LCMAPS_DEBUG_LEVEL=0
+LCMAPS_LOG_LEVEL=1
+LCAS_DEBUG_LEVEL=0
+LCAS_LOG_LEVEL=1
+
+# This variable is used to create a gridmap file.
+# Default is 'yes'. If you don't want to create a
+# gridmap file set it to 'no'.
+CONFIG_GRIDMAPDIR=yes 
+
+# Maximum number of simultaneous connections to the 
+# gridftp server
+GRIDFTP_CONNECTIONS_MAX=150
+
+# Trustmanager configuration
+# This variable defines how often the X509_CERT_DIR
+# is polled for changes in the files. 
+TRUSTMANAGER_CRL_UPDATE_INTERVAL=3600000
+
+# SAGA configuration parameters
+# moved to services/glite-[ui|wn]
+#SAGA_LOCATION=/usr/local 
+#JAVA_SAGA_LOCATION=/usr/local 
+
