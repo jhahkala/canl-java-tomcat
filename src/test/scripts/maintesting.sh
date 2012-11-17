@@ -56,7 +56,7 @@ export CVS_RSH=ssh
 if [ ! -d /root/certs ] ; then
     cvs co org.glite.security.test-utils
     cd org.glite.security.test-utils
-    bin/generate-test-certificates.sh --all --voms /root/certs
+    bin/generate-test-certificates.sh --all --voms /root/certs >certgen.log
     cd ~
 fi
 
