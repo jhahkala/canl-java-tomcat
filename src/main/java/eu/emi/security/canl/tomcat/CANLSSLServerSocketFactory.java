@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.security.KeyStoreException;
 import java.security.PrivateKey;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,6 +30,8 @@ import eu.emi.security.authn.x509.NamespaceCheckingMode;
 import eu.emi.security.authn.x509.ProxySupport;
 import eu.emi.security.authn.x509.RevocationParameters;
 import eu.emi.security.authn.x509.StoreUpdateListener;
+import eu.emi.security.authn.x509.ValidationError;
+import eu.emi.security.authn.x509.ValidationErrorListener;
 import eu.emi.security.authn.x509.impl.CertificateUtils;
 import eu.emi.security.authn.x509.impl.CertificateUtils.Encoding;
 import eu.emi.security.authn.x509.impl.KeyAndCertCredential;
@@ -174,7 +177,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
             public void loadingNotification(String location, String type, Severity level, Exception cause) {
                 if (level != Severity.NOTIFICATION) {
                     System.out.println("Error when creating or using SSL socket. Type " + type + " level: " + level
-                            + " cause: " + cause.getClass() + ":" + cause.getMessage());
+                            + ((cause == null) ? "" :(" cause: " + cause.getClass() + ":" + cause.getMessage())));
                 } else {
                     // log successful (re)loading
                 }
@@ -233,6 +236,21 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
         OpensslCertChainValidator validator = new OpensslCertChainValidator(trustStoreLocation, namespaceMode,
                 intervalMS, validatorParams);
 
+        ValidationErrorListener validationListener = new ValidationErrorListener() {
+            @Override
+            public boolean onValidationError(ValidationError error) {
+                System.out.println("Error when validating incoming certificate: " + error.getMessage() + " position: " + error.getPosition() + " " + error.getParameters());
+                X509Certificate chain[] = error.getChain();
+                for(X509Certificate cert:chain){
+                    System.out.println(cert.toString());
+                }
+                return false;
+            }
+
+        };
+
+        validator.addValidationListener(validationListener);
+        
         String hostCertLoc = (String) attributes.get("hostcert");
         if (hostCertLoc == null) {
             throw new IOException(

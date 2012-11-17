@@ -128,43 +128,43 @@ myecho "Testing with normal certificate"
 test_cert $certdir/trusted-certs/trusted_clientsha512_nopass.priv $certdir/trusted-certs/trusted_clientsha512.cert $SUCCESS 
 myecho "Test passed"
 myecho "Testing with normal proxy certificate"
-test_cert $certdir/trusted-certs/trusted_client.proxy_nopass.priv $certdir/trusted-certs/trusted_client.proxy.cert $SUCCESS $certdir/trusted-certs/trusted_client.cert
+test_cert $certdir/trusted-certs/trusted_client.proxy.grid_proxy $certdir/trusted-certs/trusted_client.proxy.grid_proxy $SUCCESS
 myecho "Test passed"
 myecho "Testing with proxy proxy certificate"
-test_cert $certdir/trusted-certs/trusted_client.proxy.proxy_nopass.priv $certdir/trusted-certs/trusted_client.proxy.proxy.cert $SUCCESS $certdir/trusted-certs/trusted_client_proxy_chain
+test_cert $certdir/trusted-certs/trusted_client.proxy.proxy.grid_proxy $certdir/trusted-certs/trusted_client.proxy.proxy.grid_proxy $SUCCESS
 myecho "Test passed"
 #myecho "Testing with legacy proxy certificate"
 #test_cert $certdir/trusted-certs/trusted_client.proxy.legacy  $certdir/trusted-certs/trusted_client.proxy.legacy $SUCCESS $certdir/trusted-certs/trusted_client.cert
 #myecho "Test passed"
 myecho "Testing with rfc proxy certificate"
-test_cert $certdir/trusted-certs/trusted_client.proxy_rfc.grid_proxy  $certdir/trusted-certs/trusted_client.proxy_rfc.grid_proxy $SUCCESS $certdir/trusted-certs/trusted_client.cert
+test_cert $certdir/trusted-certs/trusted_client.proxy_rfc.grid_proxy  $certdir/trusted-certs/trusted_client.proxy_rfc.grid_proxy $SUCCESS
 myecho "Test passed"
 myecho "Testing with rfc proxy certificate with limited proxy length"
-test_cert $certdir/trusted-certs/trusted_client.proxy_rfc_plen.proxy_rfc.proxy_rfc.grid_proxy  $certdir/trusted-certs/trusted_client.proxy_rfc_plen.proxy_rfc.proxy_rfc.grid_proxy $FAIL $certdir/trusted-certs/trusted_client_rfc_proxy_chain
+test_cert $certdir/trusted-certs/trusted_client.proxy_rfc_plen.proxy_rfc.proxy_rfc.grid_proxy  $certdir/trusted-certs/trusted_client.proxy_rfc_plen.proxy_rfc.proxy_rfc.grid_proxy $FAIL
 myecho "Test passed"
 myecho "Testing with a proxy certificate with false dn"
-test_cert $certdir/trusted-certs/trusted_client.proxy_dnerror_nopass.priv $certdir/trusted-certs/trusted_client.proxy_dnerror.cert $FAIL $certdir/trusted-certs/trusted_client.cert
+test_cert $certdir/trusted-certs/trusted_client.proxy_dnerror.grid_proxy $certdir/trusted-certs/trusted_client.proxy_dnerror.grid_proxy $FAIL
 myecho "Test passed"
 myecho "Testing with expired proxy certificate"
-test_cert $certdir/trusted-certs/trusted_client.proxy_exp_nopass.priv $certdir/trusted-certs/trusted_client.proxy_exp.cert $FAIL $certdir/trusted-certs/trusted_client.cert
+test_cert $certdir/trusted-certs/trusted_client.proxy_exp.grid_proxy $certdir/trusted-certs/trusted_client.proxy_exp.grid_proxy $FAIL
 myecho "Test passed"
 myecho "Testing with expired certificate"
 test_cert $certdir/trusted-certs/trusted_client_exp_nopass.priv $certdir/trusted-certs/trusted_client_exp.cert $FAIL 
 myecho "Test passed"
 myecho "Testing with proxy of expired certificate"
-test_cert $certdir/trusted-certs/trusted_client_exp.proxy_nopass.priv $certdir/trusted-certs/trusted_client_exp.proxy.cert $FAIL $certdir/trusted-certs/trusted_client_exp.cert
+test_cert $certdir/trusted-certs/trusted_client_exp.proxy.grid_proxy $certdir/trusted-certs/trusted_client_exp.proxy.grid_proxy $FAIL
 myecho "Test passed"
 myecho "Testing with revoked certificate"
 test_cert $certdir/trusted-certs/trusted_client_rev_nopass.priv $certdir/trusted-certs/trusted_client_rev.cert $FAIL 
 myecho "Test passed"
 myecho "Testing with proxy of revoked certificate"
-test_cert $certdir/trusted-certs/trusted_client_rev.proxy_nopass.priv $certdir/trusted-certs/trusted_client_rev.proxy.cert $FAIL $certdir/trusted-certs/trusted_client_rev.cert
+test_cert $certdir/trusted-certs/trusted_client_rev.proxy.grid_proxy $certdir/trusted-certs/trusted_client_rev.proxy.grid_proxy $FAIL
 myecho "Test passed"
 myecho "Testing with certificate from expired CA"
 test_cert $certdir/expired-certs/expired_client_nopass.priv $certdir/expired-certs/expired_client.cert $FAIL 
 myecho "Test passed"
 myecho "Testing with proxy of certificate from expired CA"
-test_cert $certdir/expired-certs/expired_client.proxy_nopass.priv $certdir/expired-certs/expired_client.proxy.cert $FAIL $certdir/expired-certs/expired_client.cert
+test_cert $certdir/expired-certs/expired_client.proxy.grid_proxy $certdir/expired-certs/expired_client.proxy.grid_proxy $FAIL
 myecho "Test passed"
 myecho "Testing with untrusted certificate"
 test_cert $certdir/fake-certs/fake_client_nopass.priv $certdir/fake-certs/fake_client.cert $FAIL
@@ -188,7 +188,7 @@ myecho "Testing with a certificates whose subca sets the correct namespace, and 
 test_cert $certdir/subsubca-certs/subsubca_clientbaddn_nopass.priv $certdir/subsubca-certs/subsubca_clientbaddn.cert  $FAIL
 myecho "Test passed"
 myecho "Testing with a certificates whose subca sets the correct namespace, and the certificate contains the full CA path"
-test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $SUCCESS $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy
+test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $SUCCESS
 myecho "Test passed"
 
 myecho "Copying over new namespace files"
@@ -214,7 +214,7 @@ myecho "Testing with a certificates whose root ca sets the correct namespace, an
 test_cert $certdir/subsubca-certs/subsubca_clientbaddn_nopass.priv $certdir/subsubca-certs/subsubca_clientbaddn.cert  $FAIL
 myecho "Test passed"
 myecho "Testing with a certificates whose root ca sets the correct namespace, and the certificate contains the full CA path"
-test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $SUCCESS $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy
+test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $SUCCESS
 myecho "Test passed"
 
 
@@ -243,7 +243,7 @@ myecho "Testing with a certificates whose subsub ca denies the namespace, and ce
 test_cert $certdir/subsubca-certs/subsubca_clientbaddn_nopass.priv $certdir/subsubca-certs/subsubca_clientbaddn.cert  $FAIL
 myecho "Test passed"
 myecho "Testing with a certificates whose subsub ca denies the namespace, and the certificate contains the full CA path"
-test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $FAIL $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy
+test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $FAIL
 myecho "Test passed"
 
 myecho "Removing a namespace file for bug testing"
