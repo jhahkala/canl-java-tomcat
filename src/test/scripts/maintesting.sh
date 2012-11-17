@@ -70,7 +70,7 @@ mv /var/lib/tomcat5/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat5/server/
 
 cd /usr/share/java
 jar -i jakarta-commons-modeler-1.1.jar
-cd ~
+cd ~/canl-java-tomcat/src/test/scripts
 
 # temporary fix for yaim, remove when yaim is updated
 cp config_secure_tomcat /opt/glite/yaim/functions/
@@ -79,9 +79,6 @@ cp site-info.pre /opt/glite/yaim/defaults/
 # config default with yaim 
 echo "#" >site-info.def
 echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat
-
-git clone https://github.com/jhahkala/canl-java-tomcat.git
-cd canl-java-tomcat/src/test/scripts
 
 ./test-setup.sh --certdir /root/certs/
 
