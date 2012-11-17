@@ -78,7 +78,7 @@ cp site-info.pre /opt/glite/yaim/defaults/
 
 # config default with yaim 
 echo "#" >site-info.def
-/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat
+echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat
 
 git clone https://github.com/jhahkala/canl-java-tomcat.git
 cd canl-java-tomcat/src/test/scripts
