@@ -220,33 +220,33 @@ test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $cer
 myecho "Test passed"
 
 
-myecho "Copying over new namespace files"
-cp -f $certdir/grid-security/certificates-rootallowsubsubdeny/*.namespaces /etc/grid-security/certificates/
-cp -f $certdir/grid-security/certificates-rootallowsubsubdeny/*.signing_policy /etc/grid-security/certificates/
+#myecho "Copying over new namespace files"
+#cp -f $certdir/grid-security/certificates-rootallowsubsubdeny/*.namespaces /etc/grid-security/certificates/
+#cp -f $certdir/grid-security/certificates-rootallowsubsubdeny/*.signing_policy /etc/grid-security/certificates/
 
-myecho "Restarting tomcat"
-/sbin/service $TOMCAT_SERVICE restart
-sleep 15
+#myecho "Restarting tomcat"
+#/sbin/service $TOMCAT_SERVICE restart
+#sleep 15
 
-myecho "Confirming that tomcat came up properly"
-wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null
-
-
-if [ $? -ne 0 ] ; then 
- myecho "Tomcat didn't seem to come up properly. Please check tomcat logs"
- myexit 1
-fi
+#myecho "Confirming that tomcat came up properly"
+#wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null
 
 
-myecho "Testing with a certificates whose subsub ca denies the namespace"
-test_cert $certdir/subsubca-certs/subsubca_client_nopass.priv $certdir/subsubca-certs/subsubca_client.cert  $FAIL
-myecho "Test passed"
-myecho "Testing with a certificates whose subsub ca denies the namespace, and certificate has a bad dn"
-test_cert $certdir/subsubca-certs/subsubca_clientbaddn_nopass.priv $certdir/subsubca-certs/subsubca_clientbaddn.cert  $FAIL
-myecho "Test passed"
-myecho "Testing with a certificates whose subsub ca denies the namespace, and the certificate contains the full CA path"
-test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $FAIL
-myecho "Test passed"
+#if [ $? -ne 0 ] ; then 
+# myecho "Tomcat didn't seem to come up properly. Please check tomcat logs"
+# myexit 1
+#fi
+
+
+#myecho "Testing with a certificates whose subsub ca denies the namespace"
+#test_cert $certdir/subsubca-certs/subsubca_client_nopass.priv $certdir/subsubca-certs/subsubca_client.cert  $FAIL
+#myecho "Test passed"
+#myecho "Testing with a certificates whose subsub ca denies the namespace, and certificate has a bad dn"
+#test_cert $certdir/subsubca-certs/subsubca_clientbaddn_nopass.priv $certdir/subsubca-certs/subsubca_clientbaddn.cert  $FAIL
+#myecho "Test passed"
+#myecho "Testing with a certificates whose subsub ca denies the namespace, and the certificate contains the full CA path"
+#test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $FAIL
+#myecho "Test passed"
 
 myecho "Removing a namespace file for bug testing"
 rm /etc/grid-security/certificates/2d0b98c8.namespaces
