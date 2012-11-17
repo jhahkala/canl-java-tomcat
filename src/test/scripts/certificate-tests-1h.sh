@@ -112,7 +112,7 @@ if [ x"$certdir" == x ] ; then
 fi
 
 ca_hash=`openssl x509 -in $certdir/trusted-ca/trusted.cert -noout -subject_hash`
-ca_hash2=`openssl x509 -in $certdir/trusted-ca/trusted.cert -noout -subject_hash_old`
+ca_hash2=`openssl x509 -in $certdir/trusted-ca/trusted.cert -noout -subject_hash_old 2>/dev/null`
 OPENSSL1=$?
 
 
