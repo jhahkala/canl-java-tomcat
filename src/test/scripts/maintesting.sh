@@ -36,7 +36,7 @@ mv RPM-GPG* /etc/pki/rpm-gpg/
 #sed -i 's/\/EMI\/1\/sl/\/EMI\/2\/RC\/sl/g' /etc/yum.repos.d/emi1-updates.repo
 #sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/emi1-updates.repo
 
-CMD="yum install -y canl-java-tomcat glite-yaim-core commons-xml-apis fetch-crl ca-policy-egi-core git cvs emacs"
+CMD="yum install -y canl-java-tomcat glite-yaim-core xml-commons-apis fetch-crl ca-policy-egi-core git cvs emacs"
 echo $CMD; $CMD
 if [ $? -ne 0 ] ; then
     echo "package installation failed... exiting"
