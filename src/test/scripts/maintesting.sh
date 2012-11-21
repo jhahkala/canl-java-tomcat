@@ -69,7 +69,7 @@ rm -rf /var/lib/tomcat5/server/lib/\[bc*
 mv /var/lib/tomcat5/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat5/server/lib/canl-java-tomcat.jar
 
 cd /usr/share/java
-jar -i jakarta-commons-modeler-1.1.jar
+#jar -i jakarta-commons-modeler-1.1.jar
 cd ~/canl-java-tomcat/src/test/scripts
 
 # temporary fix for yaim, remove when yaim is updated
