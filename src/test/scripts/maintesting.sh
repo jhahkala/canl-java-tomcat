@@ -9,7 +9,7 @@ if [ $? -ne 0 ] ; then
 fi
 
 #detect redhad version, mainly for tomcat version
-grep "Scientific Linux release 5" /etc/redhat-release
+grep "Scientific Linux SL release 5" /etc/redhat-release
 if [ $? -eq 0 ] ; then
     echo "This is sl5 with tomcat 5"
     tomcat_version=5
@@ -60,7 +60,7 @@ mv RPM-GPG* /etc/pki/rpm-gpg/
 
 CMD="yum install -y canl-java-tomcat glite-yaim-core xml-commons-apis fetch-crl ca-policy-egi-core git cvs emacs"
 echo $CMD 
-$CMD 2>&1 > yum.log
+$CMD 2>&1 > /root/yum.log
 if [ $? -ne 0 ] ; then
     echo "package installation failed... exiting"
     exit 2;
@@ -101,9 +101,9 @@ cp site-info.pre /opt/glite/yaim/defaults/
 
 # config default with yaim 
 echo "#" >site-info.def
-echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat
+echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat 2>&1 >/root/config.log
 
-./test-setup.sh --certdir /root/certs/
+./test-setup.sh --certdir /root/certs/ 2>&1 >/root/certs.log
 
 /sbin/service tomcat${tomcat_version} start
 sleep 15
