@@ -5,17 +5,26 @@
 which sed
 if [ $? -ne 0 ] ; then
     echo "sed not found... exiting"
-    exit 2;
+    exit 2
 fi
 
 #detect redhad version, mainly for tomcat version
 grep "Scientific Linux release 5" /etc/redhat-release
 if [ $? -eq 0 ] ; then
-    echo "This is scientific linux 5"
-    sl_version=5;
+    echo "This is sl5 with tomcat 5"
+    tomcat_version=5
+    os=sl5
 else
-    echo "This is scientific linux 6"
-    sl_version=6;
+    grep "Scientific Linux release 6" /etc/redhat-release
+    if [ $? -eq 0 ] ; then
+	echo "This is sl6 with tomcat 6"
+	tomcat_version=6
+	os=sl6
+    else
+	echo "Assuming this is debian with tomcat 6"
+	tomcat_version=6
+	os=deb6
+    fi
 fi
 
 
@@ -32,7 +41,13 @@ rm -f adobe.repo atrpms.repo dag.repo epel-testing.repo \
          egi-trustanchors.repo internal.repo CERN-only.repo
 
 wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
-wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl5.repo
+if [ x$os == "xsl5" ] ; then
+    wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl5.repo
+else
+    if  [ x$os == "xsl5" ] ; then
+	 wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl6.repo
+    fi
+if
 
 wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/2/RPM-GPG-KEY-emi
 mv RPM-GPG* /etc/pki/rpm-gpg/
@@ -57,8 +72,8 @@ fi
 cd ~
 
 #clean up tomcat logs
-/sbin/service tomcat${sl_version} stop
-rm -f /var/log/tomcat${sl_version}/*
+/sbin/service tomcat${tomcat_version} stop
+rm -f /var/log/tomcat${tomcat_version}/*
 
 # check out the test cert generation stuff and generate test certs
 export CVSROOT=":pserver:anonymous@glite.cvs.cern.ch:/cvs/glite"
@@ -75,9 +90,9 @@ fi
 /usr/sbin/fetch-crl
 
 # temporary fixes for the rpm problems, remove when the rpm is fixed
-ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat${sl_version}/server/lib/bcprov.jar
-rm -rf /var/lib/tomcat${sl_version}/server/lib/\[bc*
-mv /var/lib/tomcat${sl_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${sl_version}/server/lib/canl-java-tomcat.jar
+ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat${tomcat_version}/server/lib/bcprov.jar
+rm -rf /var/lib/tomcat${tomcat_version}/server/lib/\[bc*
+mv /var/lib/tomcat${tomcat_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${tomcat_version}/server/lib/canl-java-tomcat.jar
 
 cd /usr/share/java
 #jar -i jakarta-commons-modeler-1.1.jar
@@ -93,7 +108,7 @@ echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat
 
 ./test-setup.sh --certdir /root/certs/
 
-/sbin/service tomcat${sl_version} start
+/sbin/service tomcat${tomcat_version} start
 sleep 15
 
 echo "#run following commands:"
