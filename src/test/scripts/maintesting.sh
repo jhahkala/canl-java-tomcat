@@ -15,14 +15,13 @@ if [ $? -eq 0 ] ; then
     tomcat_version=5
     os=sl5
 elif [ $? -eq 0 ] ; then
-	echo "This is sl6 with tomcat 6"
-	tomcat_version=6
-	os=sl6
-    else
-	echo "Assuming this is debian with tomcat 6"
-	tomcat_version=6
-	os=deb6
-    fi
+    echo "This is sl6 with tomcat 6"
+    tomcat_version=6
+    os=sl6
+else
+    echo "Assuming this is debian with tomcat 6"
+    tomcat_version=6
+    os=deb6
 fi
 
 
