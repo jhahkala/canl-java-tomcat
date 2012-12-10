@@ -14,9 +14,7 @@ if [ $? -eq 0 ] ; then
     echo "This is sl5 with tomcat 5"
     tomcat_version=5
     os=sl5
-else
-    grep "Scientific Linux release 6" /etc/redhat-release
-    if [ $? -eq 0 ] ; then
+elif [ $? -eq 0 ] ; then
 	echo "This is sl6 with tomcat 6"
 	tomcat_version=6
 	os=sl6
@@ -41,13 +39,11 @@ rm -f adobe.repo atrpms.repo dag.repo epel-testing.repo \
          egi-trustanchors.repo internal.repo CERN-only.repo
 
 wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
-if [ x$os == "xsl5" ] ; then
+if [ x${os} == "xsl5" ] ; then
     wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl5.repo
-else
-    if  [ x$os == "xsl5" ] ; then
+elif  [ x${os} == "xsl6" ] ; then
 	 wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl6.repo
-    fi
-if
+fi
 
 wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/2/RPM-GPG-KEY-emi
 mv RPM-GPG* /etc/pki/rpm-gpg/
@@ -63,7 +59,8 @@ mv RPM-GPG* /etc/pki/rpm-gpg/
 #sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/emi1-updates.repo
 
 CMD="yum install -y canl-java-tomcat glite-yaim-core xml-commons-apis fetch-crl ca-policy-egi-core git cvs emacs"
-echo $CMD; $CMD
+echo $CMD 
+$CMD 2>&1 > yum.log
 if [ $? -ne 0 ] ; then
     echo "package installation failed... exiting"
     exit 2;
