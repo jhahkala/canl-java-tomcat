@@ -8,6 +8,17 @@ if [ $? -ne 0 ] ; then
     exit 2;
 fi
 
+#detect redhad version, mainly for tomcat version
+grep "Scientific Linux release 5" /etc/redhat-release
+if [ $? -eq 0 ] ; then
+    echo "This is scientific linux 5"
+    sl_version=5;
+else
+    echo "This is scientific linux 6"
+    sl_version=6;
+fi
+
+
 # setup repositories
 yum install -y yum-conf-epel
 cd /etc/yum.repos.d
@@ -46,8 +57,8 @@ fi
 cd ~
 
 #clean up tomcat logs
-/sbin/service tomcat5 stop
-rm -f /var/log/tomcat5/*
+/sbin/service tomcat${sl_version} stop
+rm -f /var/log/tomcat${sl_version}/*
 
 # check out the test cert generation stuff and generate test certs
 export CVSROOT=":pserver:anonymous@glite.cvs.cern.ch:/cvs/glite"
@@ -64,9 +75,9 @@ fi
 /usr/sbin/fetch-crl
 
 # temporary fixes for the rpm problems, remove when the rpm is fixed
-ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat5/server/lib/bcprov.jar
-rm -rf /var/lib/tomcat5/server/lib/\[bc*
-mv /var/lib/tomcat5/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat5/server/lib/canl-java-tomcat.jar
+ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat${sl_version}/server/lib/bcprov.jar
+rm -rf /var/lib/tomcat${sl_version}/server/lib/\[bc*
+mv /var/lib/tomcat${sl_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${sl_version}/server/lib/canl-java-tomcat.jar
 
 cd /usr/share/java
 #jar -i jakarta-commons-modeler-1.1.jar
@@ -82,7 +93,7 @@ echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat
 
 ./test-setup.sh --certdir /root/certs/
 
-/sbin/service tomcat5 start
+/sbin/service tomcat${sl_version} start
 sleep 15
 
 echo "#run following commands:"
