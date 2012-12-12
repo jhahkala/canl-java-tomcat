@@ -43,8 +43,10 @@ rm -f adobe.repo atrpms.repo dag.repo epel-testing.repo \
 wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
 if [ x${os} == "xsl5" ] ; then
     wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl5.repo
+    http://etics-repository.cern.ch/repository/pm/volatile/repomd/id/2ef206e1-f774-4503-b580-544e1c87d2a0/sl5_x86_64_gcc412EPEL/etics-volatile-build-by-id.repo
 elif  [ x${os} == "xsl6" ] ; then
 	 wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl6.repo
+	 http://etics-repository.cern.ch/repository/pm/volatile/repomd/id/ac17be2c-094d-4108-8e3e-a6d8f7c9bb50/sl6_x86_64_gcc446EPEL/etics-volatile-build-by-id.repo
 fi
 
 wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/2/RPM-GPG-KEY-emi
