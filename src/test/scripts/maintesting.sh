@@ -91,11 +91,11 @@ fi
 /usr/sbin/fetch-crl
 
 # temporary fixes for the rpm problems, remove when the rpm is fixed
-ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat${tomcat_version}/server/lib/bcprov.jar
-rm -rf /var/lib/tomcat${tomcat_version}/server/lib/\[bc*
-mv /var/lib/tomcat${tomcat_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${tomcat_version}/server/lib/canl-java-tomcat.jar
+#ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat${tomcat_version}/server/lib/bcprov.jar
+#rm -rf /var/lib/tomcat${tomcat_version}/server/lib/\[bc*
+#mv /var/lib/tomcat${tomcat_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${tomcat_version}/server/lib/canl-java-tomcat.jar
 
-cd /usr/share/java
+#cd /usr/share/java
 #jar -i jakarta-commons-modeler-1.1.jar
 cd ~/canl-java-tomcat/src/test/scripts
 
