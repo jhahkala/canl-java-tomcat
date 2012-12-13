@@ -53,7 +53,8 @@ usage() {
  echo "Usage:"
  echo "======"
  echo "certificate-tests.sh --certdir <directory for test-utils certs>"
- echo ""
+ echo "with -d or --debug you get some more information of the tests "
+
 }
 
 function test_cert() {
@@ -69,11 +70,12 @@ function test_cert() {
      fi
  fi
 
-
-echo "curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt"
-curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt 2>&1 |grep -v "failed to load .* from CURLOPT_CAPATH"|grep "CANL_OK"
+ if [ x$DEBUG == xtrue ] ; then 
+     echo "curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt"
+ fi
+curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt 2>&1 |grep "CANL_OK"
  RES=$?
- echo result was $RES
+ #echo result was $RES
 
  if [ $OUTCOME -eq $SUCCESS ] ; then 
   if [ $RES -ne 0 ] ; then
@@ -81,7 +83,7 @@ curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certif
    myexit 1
   fi
  else
-  echo expected error, result is $RES
+#  echo expected error, result is $RES
   if [ $RES -eq 0 ] ; then
    myecho "Error, testing with $CERT succeeded when it should have failed"
    myexit 1
@@ -93,6 +95,10 @@ curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certif
 while [ $# -gt 0 ]
 do
   echo $1
+ case $1 in
+ --debug | -d ) export DEBUG=true
+  shift
+  ;;
  case $1 in
  --certdir | -c ) certdir=$2
   shift

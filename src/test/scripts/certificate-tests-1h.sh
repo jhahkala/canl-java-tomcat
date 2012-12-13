@@ -66,12 +66,12 @@ function test_cert() {
      fi
  fi
 
-
-echo "curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/trustmanager-test/services/EchoServ\
+ if [ x$DEBUG == xtrue ] ; then 
+     echo "curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/trustmanager-test/services/EchoServ\
 ice?method=getAttributes|&grep -v \"failed to load .* from CURLOPT_CAPATH\""
+ fi
 curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/trustmanager-test/services/EchoServ\
-ice?method=getAttributes 2>&1 | grep -v "failed to load .* from CURLOPT_CAPATH"|grep "Your final certificate subject is"
-# openssl s_client -key $KEY -cert $CERT -CApath /etc/grid-security/certificates $CA_CMD -connect $HOST < input.txt  2>/dev/null |grep "(ok)" 
+ice?method=getAttributes 2>&1 |grep "CANL_OK"
  RES=$?
 
  if [ $OUTCOME -eq $SUCCESS ] ; then 
