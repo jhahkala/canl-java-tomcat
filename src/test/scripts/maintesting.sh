@@ -52,7 +52,8 @@ fi
 wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/2/RPM-GPG-KEY-emi
 mv RPM-GPG* /etc/pki/rpm-gpg/
 #get the canl-java-tomcat repo
-#cat etics-registered-build-by-id-protect.repo | sed s/'protect=1'/'priority=30\nprotect=1'/ > trustmanager.repo
+cat etics-*.repo | sed s/'protect=1'/'priority=30\nprotect=1'/ > canl-java-tomcat.repo
+rm etics-*.repo
 #mv -f etics-registered-build-by-id-protect.repo  ~/etics-registered-build-by-id-protect.repo
 # Gotta make sure the repositories are enabled!
 #sed -i 's/\/EMI\/1\/sl/\/EMI\/2\/RC\/sl/g' /etc/yum.repos.d/emi1-base.repo
