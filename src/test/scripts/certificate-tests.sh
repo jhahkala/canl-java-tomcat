@@ -210,7 +210,7 @@ myecho "Restarting tomcat"
 sleep 15
 
 myecho "Confirming that tomcat came up properly"
-wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null
+wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null 2>&1 >/dev/null
 
 if [ $? -ne 0 ] ; then 
  myecho "Tomcat didn't seem to come up properly. Please check tomcat logs"
@@ -264,7 +264,7 @@ myecho "Restarting tomcat"
 sleep 15
 
 myecho "Confirming that tomcat came up properly"
-wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null
+wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null 2>&1 >/dev/null
 
 if [ $? -ne 0 ] ; then 
  myecho "Tomcat didn't seem to come up properly. Please check tomcat logs"
@@ -284,7 +284,7 @@ myecho "Restarting tomcat"
 sleep 15
 
 myecho "Confirming that tomcat came up properly"
-wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null
+wget --no-check-certificate --certificate  $certdir/trusted-certs/trusted_client.cert --private-key $certdir/trusted-certs/trusted_client_nopass.priv https://$HOST/test/test.txt -O /dev/null 2>&1 >/dev/null
 
 
 
