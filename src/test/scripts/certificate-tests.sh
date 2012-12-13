@@ -219,7 +219,7 @@ myecho "Testing with a certificates whose root ca sets the correct namespace, an
 test_cert $certdir/subsubca-certs/subsubca_clientbaddn_nopass.priv $certdir/subsubca-certs/subsubca_clientbaddn.cert  $FAIL
 myecho "Test passed"
 myecho "Testing with a certificates whose root ca sets the correct namespace, and the certificate contains the full CA path"
-test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $SUCCESS
+test_cert $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy $certdir/subsubca-certs/subsubca_fullchainclient.proxy.grid_proxy  $SUCCESS isProxy
 myecho "Test passed"
 
 
