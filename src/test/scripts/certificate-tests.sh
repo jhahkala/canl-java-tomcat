@@ -99,7 +99,6 @@ do
  --debug | -d ) export DEBUG=true
   shift
   ;;
- case $1 in
  --certdir | -c ) certdir=$2
   shift
   ;;
