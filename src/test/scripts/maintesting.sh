@@ -97,6 +97,11 @@ fi
 #rm -rf /var/lib/tomcat${tomcat_version}/server/lib/\[bc*
 #mv /var/lib/tomcat${tomcat_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${tomcat_version}/server/lib/canl-java-tomcat.jar
 
+# temp fix for sl6, before the jar linking is fixed
+if  [ x${os} == "xsl6" ] ; then
+    ln -snf /usr/share/java/canl.jar /usr/share/tomcat6/lib/canl.jar
+fi
+
 #cd /usr/share/java
 #jar -i jakarta-commons-modeler-1.1.jar
 cd ~/canl-java-tomcat/src/test/scripts
