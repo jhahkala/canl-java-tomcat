@@ -123,16 +123,16 @@ fi
 myecho "Testing with normal certificate"
 test_cert $certdir/trusted-certs/trusted_client_nopass.priv $certdir/trusted-certs/trusted_client.cert $SUCCESS 
 myecho "Test passed"
-myecho "Testing with normal certificate"
+myecho "Testing with sha224 certificate"
 test_cert $certdir/trusted-certs/trusted_clientsha224_nopass.priv $certdir/trusted-certs/trusted_clientsha224.cert $SUCCESS 
 myecho "Test passed"
-myecho "Testing with normal certificate"
+myecho "Testing with sha256 certificate"
 test_cert $certdir/trusted-certs/trusted_clientsha256_nopass.priv $certdir/trusted-certs/trusted_clientsha256.cert $SUCCESS 
 myecho "Test passed"
-myecho "Testing with normal certificate"
+myecho "Testing with sha384 certificate"
 test_cert $certdir/trusted-certs/trusted_clientsha384_nopass.priv $certdir/trusted-certs/trusted_clientsha384.cert $SUCCESS 
 myecho "Test passed"
-myecho "Testing with normal certificate"
+myecho "Testing with sha512 certificate"
 test_cert $certdir/trusted-certs/trusted_clientsha512_nopass.priv $certdir/trusted-certs/trusted_clientsha512.cert $SUCCESS 
 myecho "Test passed"
 myecho "Testing with normal proxy certificate"
