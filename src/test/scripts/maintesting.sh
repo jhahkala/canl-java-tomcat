@@ -84,7 +84,8 @@ export CVS_RSH=ssh
 if [ ! -d /root/certs ] ; then
     cvs co org.glite.security.test-utils
     cd org.glite.security.test-utils
-    bin/generate-test-certificates.sh --all --voms /root/certs >certgen.log
+    bin/generate-test-certificates.sh --all --voms /root/certs 2>&1 >/root/certs.log
+
     cd ~
 fi
 
@@ -108,7 +109,7 @@ cp site-info.pre /opt/glite/yaim/defaults/
 echo "#" >site-info.def
 echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat 2>&1 >/root/config.log
 
-./test-setup.sh --certdir /root/certs/ 2>&1 >/root/certs.log
+./test-setup.sh --certdir /root/certs/
 
 /sbin/service tomcat${tomcat_version} start
 sleep 15
@@ -123,7 +124,7 @@ echo "date --set='+70 minutes'"
 echo ./certificate-tests+1h.sh --certdir /root/certs/
 
 cd ~/canl-java-tomcat/src/test/scripts
-./certificate-tests.sh --certdir /root/certs/
+./certificate-tests.sh --certdir /root/certs/ 
 RES=$?
 if [ $RES -ne 0 ]; then
     echo Certificate tests failed
