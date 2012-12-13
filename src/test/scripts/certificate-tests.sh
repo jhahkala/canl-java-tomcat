@@ -13,6 +13,7 @@ if [ $RES = 0 ]; then
     export TOMCAT_SERVICE=tomcat5
 else
     export TOMCAT_SERVICE=tomcat6
+    export SL_VERSION=sl6
 fi
 
 export WEBAPPNAME=test
@@ -59,11 +60,13 @@ function test_cert() {
  KEY=$1
  CERT=$2
  OUTCOME=$3
+ CA_CMD=""
 
+# sl6 need the cacert switch
  if [ x"$4" != x ] ;  then 
-  CA_CMD="--cacert $4"
- else
-  CA_CMD=""
+     if [ x"$SL_VERSION" == xsl6 ] ;  then 
+	 CA_CMD="--cacert $2"
+     fi
  fi
 
 
