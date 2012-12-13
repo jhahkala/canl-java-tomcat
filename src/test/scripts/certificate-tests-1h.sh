@@ -59,10 +59,11 @@ function test_cert() {
  CERT=$2
  OUTCOME=$3
 
- if [ x"$4" != x ] ;  then
-  CA_CMD="--cacert $4"
- else
-  CA_CMD=""
+# sl6 need the cacert switch but sl5 breaks with it
+ if [ x"$4" != x ] ;  then 
+     if [ x"$SL_VERSION" == xsl6 ] ;  then 
+	 CA_CMD="--cacert $2"
+     fi
  fi
 
 
