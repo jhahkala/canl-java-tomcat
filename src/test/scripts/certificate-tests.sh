@@ -71,7 +71,7 @@ function test_cert() {
 
 
 echo "curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt"
-curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt |grep -v "failed to load .* from CURLOPT_CAPATH"|grep "CANL_OK"
+curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt 2>&1 |grep -v "failed to load .* from CURLOPT_CAPATH"|grep "CANL_OK"
  RES=$?
  echo result was $RES
 
