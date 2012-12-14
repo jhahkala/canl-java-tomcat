@@ -65,7 +65,7 @@ rm etics-*.repo
 
 CMD="yum install -y canl-java-tomcat glite-yaim-core xml-commons-apis fetch-crl ca-policy-egi-core git cvs emacs"
 echo $CMD 
-$CMD 2>&1 > /root/yum.log
+$CMD >/root/yum.log 2>&1 
 if [ $? -ne 0 ] ; then
     echo "package installation failed... exiting"
     exit 2;
@@ -98,9 +98,9 @@ fi
 #mv /var/lib/tomcat${tomcat_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${tomcat_version}/server/lib/canl-java-tomcat.jar
 
 # temp fix for sl6, before the jar linking is fixed
-if  [ x${os} == "xsl6" ] ; then
-    ln -snf /usr/share/java/canl.jar /usr/share/tomcat6/lib/canl.jar
-fi
+#if  [ x${os} == "xsl6" ] ; then
+#    ln -snf /usr/share/java/canl.jar /usr/share/tomcat6/lib/canl.jar
+#fi
 
 #cd /usr/share/java
 #jar -i jakarta-commons-modeler-1.1.jar
@@ -112,7 +112,7 @@ cp site-info.pre /opt/glite/yaim/defaults/
 
 # config default with yaim 
 echo "#" >site-info.def
-echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat 2>&1 >/root/config.log
+echo y|/opt/glite/yaim/bin/yaim -r -s site-info.def -f config_secure_tomcat >/root/config.log 2>&1
 
 ./test-setup.sh --certdir /root/certs/
 
