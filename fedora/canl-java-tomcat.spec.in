@@ -126,7 +126,7 @@ fi
 
 
 %changelog
-* Tue Dec 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.9-1
+* Tue Dec 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.11-1
 - Initial release
 
 
