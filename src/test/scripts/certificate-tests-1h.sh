@@ -71,7 +71,7 @@ function test_cert() {
 ice?method=getAttributes|&grep -v \"failed to load .* from CURLOPT_CAPATH\""
  fi
 curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/trustmanager-test/services/EchoServ\
-ice?method=getAttributes 2>&1 |grep "CANL_OK"
+ice?method=getAttributes 2>&1 |grep -q "CANL_OK"
  RES=$?
 
  if [ $OUTCOME -eq $SUCCESS ] ; then 

@@ -73,7 +73,7 @@ function test_cert() {
  if [ x$DEBUG == xtrue ] ; then 
      echo "curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt"
  fi
-curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt 2>&1 |grep "CANL_OK"
+curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certificates/ https://${HOST}/test/test.txt 2>&1 |grep -q "CANL_OK"
  RES=$?
  #echo result was $RES
 
