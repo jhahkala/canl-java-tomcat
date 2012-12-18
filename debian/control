@@ -1,4 +1,4 @@
-Source: canl-java-tomcat
+Source: libcanl-java-tomcat
 Priority: extra
 Maintainer: Joni Hahkala <joni.hahkala@cern.ch>
 Build-Depends: debhelper (>= 7.0.50~), maven2, default-jdk
