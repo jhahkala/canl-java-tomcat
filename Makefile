@@ -97,10 +97,10 @@ rpm: pre_rpmbuild
 pre_debbuild:
 	test -f $(name)-$(version).tar.gz || make dist
 	@echo "Prepare for Debian building in $(debbuild_dir)"
-	mv $(name)-$(version).tar.gz $(name)-$(version).src.tar.gz
+	mv $(name)-$(version).tar.gz $(deb_name)-$(version).src.tar.gz
 	mkdir -p $(debbuild_dir)
-	cp $(name)-$(version).src.tar.gz $(debbuild_dir)/$(name)_$(version).orig.tar.gz
-	tar -C $(debbuild_dir) -xzf $(name)-$(version).src.tar.gz
+	cp $(deb_name)-$(version).src.tar.gz $(debbuild_dir)/$(deb_name)_$(version).orig.tar.gz
+	tar -C $(debbuild_dir) -xzf $(deb_name)-$(version).src.tar.gz
 
 
 deb: pre_debbuild
@@ -137,8 +137,8 @@ etics:
 		mkdir -p $(tmp_dir) ; \
 		dpkg -x $(debbuild_dir)/$(deb_name)_$(version)-*.deb $(tmp_dir) ; \
 		cd $(tmp_dir) ; \
-		tar -C $(tmp_dir) -czf $(name)-$(version).tar.gz * ; \
-		mv -v $(name)-$(version).tar.gz $(tgz_dir) ; \
+		tar -C $(tmp_dir) -czf $(deb_name)-$(version).tar.gz * ; \
+		mv -v $(deb_name)-$(version).tar.gz $(tgz_dir) ; \
 		rm -fr $(tmp_dir) ; \
 	fi
 
