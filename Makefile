@@ -64,6 +64,7 @@ package: spec
 	@echo "Build with maven"
 	mvn -B -s $(maven_settings_file) package
 
+
 install:
 	@echo "Install binary in $(DESTDIR)$(prefix)"
 	mkdir -p $(DESTDIR)$(prefix)/usr/share/java
