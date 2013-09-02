@@ -126,6 +126,9 @@ fi
 
 
 %changelog
+* Tue Dec 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.13-1
+- Bug fix for hanging connections, as handshake is forced in accept. Stop forcing it.
+
 * Tue Dec 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.12-1
 - Initial release
 

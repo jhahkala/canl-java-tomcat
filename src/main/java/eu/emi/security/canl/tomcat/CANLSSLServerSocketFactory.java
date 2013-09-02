@@ -82,15 +82,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
             asock = (SSLSocket) sSocket.accept();
             configureClientAuth(asock);
             String ip = asock.getInetAddress().toString();
-            javax.security.cert.X509Certificate[] certs = asock.getSession().getPeerCertificateChain();
-            String dn = null;
-            if (certs != null) {
-                dn = X500NameUtils.getReadableForm(certs[0].getSubjectDN().toString());
-            }
-            Date now = new Date();
-
-            System.out.println(now.toString() + " : connection from " + ip
-                    + ((dn == null) ? " no certificate." : " dn: " + dn + "."));
+			System.out.println(new Date().toString() + " : connection from " + ip);
         } catch (SSLException e) {
             throw new SocketException("SSL handshake error" + e.toString());
         }
