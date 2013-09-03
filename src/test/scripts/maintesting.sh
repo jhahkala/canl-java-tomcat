@@ -40,17 +40,19 @@ rm -f adobe.repo atrpms.repo dag.repo epel-testing.repo \
          glite-rip-3.* non-glite-rip-3.* \
          egi-trustanchors.repo internal.repo CERN-only.repo
 
+rpm --import http://emisoft.web.cern.ch/emisoft/dist/EMI/3/RPM-GPG-KEY-emi
+
 wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
 if [ x${os} == "xsl5" ] ; then
-    wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl5.repo
-    wget --no-check-certificate http://etics-repository.cern.ch/repository/pm/volatile/repomd/id/4c12dbc4-bcb3-49f1-ab7a-b2d459d004fa/sl5_x86_64_gcc412EPEL/etics-volatile-build-by-id-protect.repo
+    wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
+	yum localinstall emi-release-3.0.0-2.el5.noarch.rpm
 elif  [ x${os} == "xsl6" ] ; then
-	 wget --no-check-certificate http://eticssoft.web.cern.ch/eticssoft/mock/emi-3-rc-sl6.repo
-	 wget --no-check-certificate http://etics-repository.cern.ch/repository/pm/volatile/repomd/id/5380b27f-3898-4d52-8c8e-f3504b07b4b8/sl6_x86_64_gcc446EPEL/etics-volatile-build-by-id-protect.repo
+	wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
+	yum localinstall emi-release-3.0.0-2.el6.noarch.rpm
 fi
 
-wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/2/RPM-GPG-KEY-emi
-mv RPM-GPG* /etc/pki/rpm-gpg/
+wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.13-1.noarch.rpm?raw=true
+
 #get the canl-java-tomcat repo
 cat etics-*.repo | sed s/'protect=1'/'priority=30\nprotect=1'/ > canl-java-tomcat.repo
 rm etics-*.repo
@@ -63,13 +65,22 @@ rm etics-*.repo
 #sed -i 's/\/EMI\/1\/sl/\/EMI\/2\/RC\/sl/g' /etc/yum.repos.d/emi1-updates.repo
 #sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/emi1-updates.repo
 
-CMD="yum install -y canl-java-tomcat glite-yaim-core xml-commons-apis fetch-crl ca-policy-egi-core git cvs emacs"
+CMD="yum install -y glite-yaim-core xml-commons-apis fetch-crl ca-policy-egi-core git cvs emacs"
 echo $CMD 
 $CMD >/root/yum.log 2>&1 
 if [ $? -ne 0 ] ; then
     echo "package installation failed... exiting"
     exit 2;
 fi
+
+CMD="yum install -y canl-java-tomcat*"
+echo $CMD 
+$CMD >/root/yum.log 2>&1 
+if [ $? -ne 0 ] ; then
+    echo "package installation failed... exiting"
+    exit 2;
+fi
+
 
 cd ~
 
@@ -82,8 +93,8 @@ export CVSROOT=":pserver:anonymous@glite.cvs.cern.ch:/cvs/glite"
 export CVS_RSH=ssh
 
 if [ ! -d /root/certs ] ; then
-    cvs co org.glite.security.test-utils
-    cd org.glite.security.test-utils
+	git clone https://github.com/jhahkala/test-certs.git
+    cd test-certs
     bin/generate-test-certificates.sh --all --voms /root/certs >/root/certs.log 2>&1
 
     cd ~
