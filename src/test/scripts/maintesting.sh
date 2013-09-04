@@ -47,10 +47,10 @@ rpm --import http://emisoft.web.cern.ch/emisoft/dist/EMI/3/RPM-GPG-KEY-emi
 wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
 if [ x${os} == "xsl5" ] ; then
     wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
-	yum localinstall emi-release-3.0.0-2.el5.noarch.rpm
+	yum -y localinstall emi-release-3.0.0-2.el5.noarch.rpm
 elif  [ x${os} == "xsl6" ] ; then
 	wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
-	yum localinstall emi-release-3.0.0-2.el6.noarch.rpm
+	yum -y localinstall emi-release-3.0.0-2.el6.noarch.rpm
 fi
 
 wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.13-1.noarch.rpm?raw=true
