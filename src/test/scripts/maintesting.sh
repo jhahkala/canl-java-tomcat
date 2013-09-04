@@ -40,6 +40,8 @@ rm -f adobe.repo atrpms.repo dag.repo epel-testing.repo \
          glite-rip-3.* non-glite-rip-3.* \
          egi-trustanchors.repo internal.repo CERN-only.repo
 
+cd ~
+
 rpm --import http://emisoft.web.cern.ch/emisoft/dist/EMI/3/RPM-GPG-KEY-emi
 
 wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current/repo-files/egi-trustanchors.repo
@@ -54,8 +56,8 @@ fi
 wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.13-1.noarch.rpm?raw=true
 
 #get the canl-java-tomcat repo
-cat etics-*.repo | sed s/'protect=1'/'priority=30\nprotect=1'/ > canl-java-tomcat.repo
-rm etics-*.repo
+#cat etics-*.repo | sed s/'protect=1'/'priority=30\nprotect=1'/ > canl-java-tomcat.repo
+#rm etics-*.repo
 #mv -f etics-registered-build-by-id-protect.repo  ~/etics-registered-build-by-id-protect.repo
 # Gotta make sure the repositories are enabled!
 #sed -i 's/\/EMI\/1\/sl/\/EMI\/2\/RC\/sl/g' /etc/yum.repos.d/emi1-base.repo
