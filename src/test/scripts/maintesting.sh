@@ -39,6 +39,8 @@ rm -f adobe.repo atrpms.repo dag.repo epel-testing.repo \
          sl-srpms.repo sl-testing.repo \
          glite-rip-3.* non-glite-rip-3.* \
          egi-trustanchors.repo internal.repo CERN-only.repo
+         
+wget http://repository.egi.eu/sw/production/cas/1/current/repo-files/EGI-trustanchors.repo
 
 cd ~
 
