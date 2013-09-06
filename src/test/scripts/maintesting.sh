@@ -77,7 +77,7 @@ fi
 
 CMD="yum localinstall -y canl-java-tomcat-*"
 echo $CMD 
-$CMD >/root/yum.log 2>&1 
+$CMD >>/root/yum.log 2>&1 
 if [ $? -ne 0 ] ; then
     echo "package installation failed... exiting"
     exit 2;
