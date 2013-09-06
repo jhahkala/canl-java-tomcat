@@ -75,7 +75,7 @@ if [ $? -ne 0 ] ; then
     exit 2;
 fi
 
-CMD="yum install -y canl-java-tomcat*"
+CMD="yum localinstall -y canl-java-tomcat-*"
 echo $CMD 
 $CMD >/root/yum.log 2>&1 
 if [ $? -ne 0 ] ; then
