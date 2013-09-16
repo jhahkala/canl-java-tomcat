@@ -58,6 +58,8 @@ if [ x%{?dist} == x.el6 ]; then
 else
 	tomcat_ver=tomcat5
 fi	
+# TODO: remove the -new ending form the link names after it's sure people have migrated from 0.1.12 
+# version. Add removal of the -new named link to the post target to remove the old links when doing so.
 if [ ${tomcat_ver}x == "tomcat5x" ] ; then
 	ln -snf %{_datadir}/java/%{name}.jar /var/lib/tomcat5/server/lib/%{name}-new.jar
 	# in sl5 we use emi distributed bouncycastle as the system one is too old for canl
