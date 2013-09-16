@@ -81,7 +81,7 @@ if [ ${tomcat_ver}x == "tomcat5x" ] ; then
 		echo /usr/share/java/canl.jar not found, cannot link it to the tomcat server/lib
 	fi
 elif [ ${tomcat_ver}x == "tomcat6x" ] ; then
-	ln -sn %{_datadir}/java/%{name}.jar /usr/share/tomcat6/lib/%{name}.jar
+	ln -snf %{_datadir}/java/%{name}.jar /usr/share/tomcat6/lib/%{name}.jar
 	if [ -f /usr/share/java/bcprov.jar ] ; then 
 		ln -snf /usr/share/java/bcprov.jar /usr/share/tomcat6/lib/bcprov.jar
 	else
@@ -110,22 +110,28 @@ else
 fi
 
 
-%preun
-if [ x%{?dist} != x.el6 ] ; then
-	rm -f /var/lib/tomcat5/server/lib/%{name}.jar
-	rm -f /var/lib/tomcat5/server/lib/bcprov.jar
-	rm -f /var/lib/tomcat5/server/lib/commons-io.jar
-	rm -f /var/lib/tomcat5/server/lib/canl.jar
-elif [ x%{?dist} == x.el6 ] ; then
-	rm -f /usr/share/tomcat6/lib/%{name}.jar
-	rm -f /usr/share/tomcat6/lib/bcprov.jar
-	rm -f /usr/share/tomcat6/lib/commons-io.jar
-	rm -f /usr/share/tomcat6/lib/commons-logging.jar
-	rm -f /usr/share/tomcat6/lib/canl.jar
+%postun
+if [ "$1" = "0" ] ; then 
+	if [ x%{?dist} != x.el6 ] ; then
+		rm -f /var/lib/tomcat5/server/lib/%{name}.jar
+		rm -f /var/lib/tomcat5/server/lib/bcprov.jar
+		rm -f /var/lib/tomcat5/server/lib/commons-io.jar
+		rm -f /var/lib/tomcat5/server/lib/canl.jar
+	elif [ x%{?dist} == x.el6 ] ; then
+		rm -f /usr/share/tomcat6/lib/%{name}.jar
+		rm -f /usr/share/tomcat6/lib/bcprov.jar
+		rm -f /usr/share/tomcat6/lib/commons-io.jar
+		rm -f /usr/share/tomcat6/lib/commons-logging.jar
+		rm -f /usr/share/tomcat6/lib/canl.jar
+	fi
 fi
 
 
 %changelog
+* Tue Sep 16 2013 Joni Hahkala <joni.hahkala@cern.ch> 0.1.14-1
+- Bug fix for preun removing links during upgrade, changed to postun and only run when
+  last version is removed.
+
 * Tue Dec 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.13-1
 - Bug fix for hanging connections, as handshake is forced in accept. Stop forcing it.
 
