@@ -113,20 +113,11 @@ fi
 %postun
 if [ "$1" = "0" ] ; then 
 	if [ x%{?dist} != x.el6 ] ; then
-		rm -f /var/lib/tomcat5/server/lib/%{name}.jar
-		rm -f /var/lib/tomcat5/server/lib/bcprov.jar
-		rm -f /var/lib/tomcat5/server/lib/commons-io.jar
-		rm -f /var/lib/tomcat5/server/lib/canl.jar
 		rm -f /var/lib/tomcat5/server/lib/%{name}-new.jar
 		rm -f /var/lib/tomcat5/server/lib/bcprov-new.jar
 		rm -f /var/lib/tomcat5/server/lib/commons-io-new.jar
 		rm -f /var/lib/tomcat5/server/lib/canl-new.jar
 	elif [ x%{?dist} == x.el6 ] ; then
-		rm -f /usr/share/tomcat6/lib/%{name}.jar
-		rm -f /usr/share/tomcat6/lib/bcprov.jar
-		rm -f /usr/share/tomcat6/lib/commons-io.jar
-		rm -f /usr/share/tomcat6/lib/commons-logging.jar
-		rm -f /usr/share/tomcat6/lib/canl.jar
 		rm -f /usr/share/tomcat6/lib/%{name}-new.jar
 		rm -f /usr/share/tomcat6/lib/bcprov-new.jar
 		rm -f /usr/share/tomcat6/lib/commons-io-new.jar
@@ -137,9 +128,10 @@ fi
 
 
 %changelog
-* Tue Sep 16 2013 Joni Hahkala <joni.hahkala@cern.ch> 0.1.15-1
+* Tue Sep 16 2013 Joni Hahkala <joni.hahkala@cern.ch> 0.1.16-1
 - Bug fix for preun removing links during upgrade, changed to postun and only run when
-  last version is removed.
+  last version is removed. Change the name of links as the old version removes the old
+  named links.
 
 * Tue Dec 01 2012 Joni Hahkala <joni.hahkala@cern.ch> 0.1.13-1
 - Bug fix for hanging connections, as handshake is forced in accept. Stop forcing it.
