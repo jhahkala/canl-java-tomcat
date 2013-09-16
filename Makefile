@@ -17,7 +17,7 @@
 
 name=canl-java-tomcat
 
-version=0.1.14
+version=0.1.15
 release=1
 
 prefix=/
