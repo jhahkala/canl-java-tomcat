@@ -17,7 +17,7 @@ else
 fi
 
 SERVICE_CMD=`which service`
-if [ x"$SERVICE_CMD" != x ] ;  then
+if [ x"$SERVICE_CMD" == x ] ;  then
 	SERVICE_CMD="/sbin/service"
 fi
 

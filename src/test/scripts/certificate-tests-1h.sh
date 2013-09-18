@@ -17,7 +17,7 @@ else
     export TOMCAT_SERVICE=tomcat6
 fi
 SERVICE_CMD=`which service`
-if [ x"$SERVICE_CMD" != x ] ;  then
+if [ x"$SERVICE_CMD" == x ] ;  then
 	SERVICE_CMD="/sbin/service"
 fi
 #end of config variables
