@@ -7,7 +7,7 @@
 #config variables
 #tomcat host and port
 export HOST=`hostname -f`:8443
-rpm -qa |grep tomcat5
+ls /etc/tomcat* |grep tomcat5
 RES=$?
 if [ $RES = 0 ]; then
     export TOMCAT_SERVICE=tomcat5
