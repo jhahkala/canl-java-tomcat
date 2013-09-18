@@ -30,6 +30,9 @@ if [ ! -d /root/certs ] ; then
     cd ~
 fi
 
+# curl is not present by default, and it is needed for the tests.
+apt-get -y install curl
+
 cd ~/canl-java-tomcat/src/test/scripts
 
 ./test-setup.sh --certdir /root/certs/
