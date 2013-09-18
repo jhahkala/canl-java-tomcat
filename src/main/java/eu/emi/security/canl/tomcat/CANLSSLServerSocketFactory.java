@@ -40,7 +40,6 @@ import eu.emi.security.authn.x509.impl.KeyAndCertCredential;
 import eu.emi.security.authn.x509.impl.OpensslCertChainValidator;
 import eu.emi.security.authn.x509.impl.SocketFactoryCreator;
 import eu.emi.security.authn.x509.impl.ValidatorParams;
-import eu.emi.security.authn.x509.impl.X500NameUtils;
 
 /**
  * The Tomcat glue ServerSocketFactory class. This class works as a glue
@@ -52,11 +51,6 @@ import eu.emi.security.authn.x509.impl.X500NameUtils;
  * @author Joni Hahkala
  */
 public class CANLSSLServerSocketFactory extends ServerSocketFactory {
-    /**
-     * The logging facility.
-     */
-    private static final org.apache.commons.logging.Log LOGGER = org.apache.commons.logging.LogFactory
-            .getLog(CANLSSLServerSocketFactory.class);
 
     /** The internal serversocket instance. */
     protected SSLServerSocketFactory _serverSocketFactory = null;
@@ -282,7 +276,6 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
      * @param ssocket the server socket to initialize.
      */
     private void initServerSocket(ServerSocket ssocket) {
-        LOGGER.debug("TMSSLServerSocketFactory.initServerSocket:");
 
         SSLServerSocket socket = (SSLServerSocket) ssocket;
 
@@ -292,10 +285,7 @@ public class CANLSSLServerSocketFactory extends ServerSocketFactory {
         ArrayList<String> newCiphers = new ArrayList<String>(ciphers.length);
         for (String cipher : ciphers) {
             if (cipher.indexOf("RC4") == -1 && cipher.indexOf("ECDH") == -1) {
-                LOGGER.debug("Enabling cipher: " + cipher);
                 newCiphers.add(cipher);
-            } else {
-                LOGGER.debug("Disabling cipher: " + cipher);
             }
         }
         socket.setEnabledCipherSuites(newCiphers.toArray(new String[] {}));
