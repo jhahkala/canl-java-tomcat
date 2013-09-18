@@ -1,5 +1,11 @@
 #!/bin/bash
 
+SERVICE_CMD=`which service`
+if [ x"$SERVICE_CMD" != x ] ;  then
+	SERVICE_CMD="/sbin/service"
+fi
+
+
 # This script sets up a proper environment for the tests. This mainly consists of copying around certificates..
 
 usage() {
@@ -114,4 +120,4 @@ fi
 mkdir /var/lib/${TOMCAT_SERVICE}/webapps/test
 echo CANL_OK >/var/lib/${TOMCAT_SERVICE}/webapps/test/test.txt
 
-/sbin/service ${TOMCAT_SERVICE} restart
+SERVICE_CMD ${TOMCAT_SERVICE} restart

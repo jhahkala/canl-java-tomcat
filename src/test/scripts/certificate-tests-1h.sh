@@ -16,6 +16,10 @@ if [ $RES = 0 ]; then
 else
     export TOMCAT_SERVICE=tomcat6
 fi
+SERVICE_CMD=`which service`
+if [ x"$SERVICE_CMD" != x ] ;  then
+	SERVICE_CMD="/sbin/service"
+fi
 #end of config variables
 
 SUCCESS=1
@@ -138,7 +142,7 @@ if [ $OPENSSL1 -eq 0 ]; then
 fi
 
 myecho "Restarting tomcat"
-/sbin/service $TOMCAT_SERVICE restart
+ $TOMCAT_SERVICE restart
 
 sleep 15
 
@@ -152,6 +156,6 @@ if [ $OPENSSL1 -eq 0 ]; then
 fi
 
 myecho "Restarting tomcat"
-/sbin/service $TOMCAT_SERVICE restart
+ $TOMCAT_SERVICE restart
 
 myexit 0
