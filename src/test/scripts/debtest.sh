@@ -22,7 +22,7 @@ cp server.xml log4j-trustmanager.properties /etc/tomcat6
 
 ./test-setup.sh --certdir /root/certs/
 
-/sbin/service tomcat6 start
+service tomcat6 start
 sleep 15
 cd ~/canl-java-tomcat/src/test/scripts
 ./certificate-tests.sh --certdir /root/certs/ 
