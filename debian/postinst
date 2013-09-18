@@ -8,15 +8,16 @@ if [ -d /var/lib/tomcat6 ] ; then
 	else
 		echo "/usr/share/java/bcprov-1.46.jar not found, cannot link it to the tomcat server/lib"
 	fi
-	
-# link the unversioned canl lib, and if not present, link the versioned jar file.
-# At the time of writing the unversioned link is missing.
-
 	if [ -f /usr/share/java/canl.jar ] ; then 
 		ln -snf /usr/share/java/canl.jar /var/lib/tomcat6/common/canl.jar
 	else
 		echo /usr/share/java/canl.jar not found, cannot link it to the tomcat server/lib
 	fi
+	if [ -f /usr/share/java/commons-io.jar ] ; then 
+		ln -snf /usr/share/java/commons-io.jar /var/lib/tomcat6/common/commons-io.jar
+	else
+		echo "/usr/share/java/commons-io.jar not found, cannot link it to the tomcat server/lib"
+	fi	
 else
 	echo No tomcat6 installation found, link the necessary libraries to tomcat6/common yourself.
 fi
