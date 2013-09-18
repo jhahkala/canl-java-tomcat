@@ -17,8 +17,11 @@ else
 fi
 
 SERVICE_CMD=`which service`
+echo which service result is ${SERVICE_CMD}.
 if [ x"$SERVICE_CMD" == x ] ;  then
+	echo no service command found
 	SERVICE_CMD="/sbin/service"
+	echo service command now: ${SERVICE_CMD}.
 fi
 
 
@@ -100,7 +103,6 @@ curl -v -s -S --cert $CERT --key $KEY $CA_CMD --capath /etc/grid-security/certif
 
 while [ $# -gt 0 ]
 do
-  echo $1
  case $1 in
  --debug | -d ) export DEBUG=true
   shift
