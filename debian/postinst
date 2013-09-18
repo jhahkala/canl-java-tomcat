@@ -1,10 +1,10 @@
 #!/bin/sh
 set -e
 if [ -d /var/lib/tomcat6 ] ; then
-	ln -sn /usr/share/java/canl-java-tomcat.jar /var/lib/tomcat6/common/canl-java-tomcat.jar
+	ln -snf /usr/share/java/canl-java-tomcat.jar /var/lib/tomcat6/common/canl-java-tomcat.jar
 	
 	if [ -f /usr/share/java/bcprov-1.46.jar ] ; then 
-		ln -sn /usr/share/java/bcprov-1.46.jar /var/lib/tomcat6/common/bcprov.jar
+		ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat6/common/bcprov.jar
 	else
 		echo "/usr/share/java/bcprov-1.46.jar not found, cannot link it to the tomcat server/lib"
 	fi
@@ -14,9 +14,9 @@ if [ -d /var/lib/tomcat6 ] ; then
 
 	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
 	if [ -f /usr/share/java/canl-java.jar ] ; then 
-		ln -sn /usr/share/java/canl-java.jar /var/lib/tomcat6/common/canl-java.jar
+		ln -snf /usr/share/java/canl-java.jar /var/lib/tomcat6/common/canl-java.jar
 	elif [ -f ${canl_jar} ] ; then 
-		ln -sn ${canl_jar} /var/lib/tomcat6/common/canl-java.jar
+		ln -snf ${canl_jar} /var/lib/tomcat6/common/canl-java.jar
 	else
 		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
 	fi

@@ -56,8 +56,12 @@ fi
 chown tomcat:tomcat /etc/grid-security/tomcat*
 
 if [ $? -ne 0 ] ; then
- echo "Error changing host credential permissions"
- exit 1
+    # for debian
+	chown tomcat6:tomcat6 /etc/grid-security/tomcat*
+	if [ $? -ne 0 ] ; then
+ 		echo "Error changing host credential permissions"
+ 		exit 1
+ 	fi
 fi
 
 echo "Generating short crl"
