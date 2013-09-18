@@ -1,8 +1,9 @@
-libcanl-java-tomcat (0.1.17-1) unstable; urgency=low
+libcanl-java-tomcat (0.1.18-1) unstable; urgency=low
 
   * Bug fix for redhat version preun removing links 
   during upgrade, changed to postun and only run when 
   last version is removed.
+  * fix debian installation
 
  -- Joni Hahkala <joni.hahkala@cern.ch>  Mon, 16 Sept 2013 18:33:59 +0200
 
