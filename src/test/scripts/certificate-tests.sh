@@ -214,7 +214,7 @@ cp -f $certdir/grid-security/certificates-rootwithpolicy/*.namespaces /etc/grid-
 cp -f $certdir/grid-security/certificates-rootwithpolicy/*.signing_policy /etc/grid-security/certificates/
 
 myecho "Restarting tomcat"
-SERVICE_CMD $TOMCAT_SERVICE restart
+$SERVICE_CMD $TOMCAT_SERVICE restart
 sleep 15
 
 myecho "Confirming that tomcat came up properly"
@@ -241,7 +241,7 @@ myecho "Test passed"
 #cp -f $certdir/grid-security/certificates-rootallowsubsubdeny/*.signing_policy /etc/grid-security/certificates/
 
 #myecho "Restarting tomcat"
-#SERVICE_CMD $TOMCAT_SERVICE restart
+#$SERVICE_CMD $TOMCAT_SERVICE restart
 #sleep 15
 
 #myecho "Confirming that tomcat came up properly"
@@ -268,7 +268,7 @@ myecho "Removing a namespace file for bug testing"
 rm /etc/grid-security/certificates/2d0b98c8.namespaces
 
 myecho "Restarting tomcat"
-SERVICE_CMD $TOMCAT_SERVICE restart
+$SERVICE_CMD $TOMCAT_SERVICE restart
 sleep 15
 
 myecho "Confirming that tomcat came up properly"
@@ -288,7 +288,7 @@ cp -f $certdir/grid-security/certificates/*.namespaces /etc/grid-security/certif
 cp -f $certdir/grid-security/certificates/*.signing_policy /etc/grid-security/certificates/
 
 myecho "Restarting tomcat"
-SERVICE_CMD $TOMCAT_SERVICE restart
+$SERVICE_CMD $TOMCAT_SERVICE restart
 sleep 15
 
 myecho "Confirming that tomcat came up properly"

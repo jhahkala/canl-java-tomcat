@@ -142,7 +142,7 @@ if [ $OPENSSL1 -eq 0 ]; then
 fi
 
 myecho "Restarting tomcat"
- $TOMCAT_SERVICE restart
+$SERVICE_CMD $TOMCAT_SERVICE restart
 
 sleep 15
 
@@ -156,6 +156,6 @@ if [ $OPENSSL1 -eq 0 ]; then
 fi
 
 myecho "Restarting tomcat"
- $TOMCAT_SERVICE restart
+$SERVICE_CMD $TOMCAT_SERVICE restart
 
 myexit 0

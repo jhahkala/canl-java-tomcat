@@ -120,4 +120,4 @@ fi
 mkdir /var/lib/${TOMCAT_SERVICE}/webapps/test
 echo CANL_OK >/var/lib/${TOMCAT_SERVICE}/webapps/test/test.txt
 
-SERVICE_CMD ${TOMCAT_SERVICE} restart
+$SERVICE_CMD ${TOMCAT_SERVICE} restart
