@@ -105,7 +105,6 @@ while [ $# -gt 0 ]
 do
  case $1 in
  --debug | -d ) export DEBUG=true
-  shift
   ;;
  --certdir | -c ) certdir=$2
   shift
