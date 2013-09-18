@@ -12,10 +12,10 @@ wget -q   -O - http://emisoft.web.cern.ch/emisoft/dist/EMI/3/RPM-GPG-KEY-emi | a
 
 wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/debian/dists/squeeze/main/binary-amd64/emi-release_3.0.0-2.deb6.1_all.deb
 
-dpkg -i emi-release_3.0.0-2.deb6.1_all.deb
+dpkg -iy emi-release_3.0.0-2.deb6.1_all.deb
 
-apt-get install git
-apt-get install tomcat6
+apt-get -y install git
+apt-get -y install tomcat6
 	
 wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/libcanl-java-tomcat_0.1.17-1_all.deb?raw=true
 dpkg -i libcanl-java-tomcat*
