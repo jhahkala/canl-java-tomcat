@@ -107,23 +107,13 @@ fi
 #update crls
 /usr/sbin/fetch-crl
 
-# temporary fixes for the rpm problems, remove when the rpm is fixed
-#ln -snf /usr/share/java/bcprov-1.46.jar /var/lib/tomcat${tomcat_version}/server/lib/bcprov.jar
-#rm -rf /var/lib/tomcat${tomcat_version}/server/lib/\[bc*
-#mv /var/lib/tomcat${tomcat_version}/server/lib/\[canl-java-tomcat\].jar /var/lib/tomcat${tomcat_version}/server/lib/canl-java-tomcat.jar
-
-# temp fix for sl6, before the jar linking is fixed
-#if  [ x${os} == "xsl6" ] ; then
-#    ln -snf /usr/share/java/canl.jar /usr/share/tomcat6/lib/canl.jar
-#fi
-
 #cd /usr/share/java
 #jar -i jakarta-commons-modeler-1.1.jar
 cd ~/canl-java-tomcat/src/test/scripts
 
 # temporary fix for yaim, remove when yaim is updated
-cp config_secure_tomcat /opt/glite/yaim/functions/
-cp site-info.pre /opt/glite/yaim/defaults/
+#cp config_secure_tomcat /opt/glite/yaim/functions/
+#cp site-info.pre /opt/glite/yaim/defaults/
 
 # config default with yaim 
 echo "#" >site-info.def

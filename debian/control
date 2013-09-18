@@ -10,7 +10,7 @@ Vcs-Browser: https://github.com/jhahkala/canl-java-tomcat.git
 
 Package: libcanl-java-tomcat
 Architecture: all
-Depends: default-jre-headless, lsb-base, libcanl-java, ${java:Depends}, ${misc:Depends}
+Depends: default-jre-headless, lsb-base, libcanl-java, tomcat6, ${java:Depends}, ${misc:Depends}
 Recommends: ${java:Recommends}
 Description: Plugin that allows the use of EMI Common Authentication Library in tomcat.
  A plugin for tomcat that allows the use of EMI Common 
