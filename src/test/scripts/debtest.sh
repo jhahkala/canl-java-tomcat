@@ -28,11 +28,12 @@ if [ ! -d /root/certs ] ; then
     cd ~
 fi
 
+cd ~/canl-java-tomcat/src/test/scripts
+
 ./test-setup.sh --certdir /root/certs/
 
 service tomcat6 start
 sleep 15
-cd ~/canl-java-tomcat/src/test/scripts
 ./certificate-tests.sh --certdir /root/certs/ 
 RES=$?
 if [ $RES -ne 0 ]; then
