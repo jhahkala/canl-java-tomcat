@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Test connecting with a number of different certificates
 # This assumes that the certificates were created with
