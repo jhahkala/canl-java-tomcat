@@ -16,7 +16,9 @@ dpkg -i emi-release_3.0.0-2.deb6.1_all.deb
 
 apt-get install git
 apt-get install tomcat6
-apt-get install libcanl-java-tomcat
+	
+wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/libcanl-java-tomcat_0.1.17-1_all.deb?raw=true
+dpkg -i libcanl-java-tomcat*
 
 cp server.xml log4j-trustmanager.properties /etc/tomcat6
 

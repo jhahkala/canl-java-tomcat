@@ -50,11 +50,11 @@ wget --no-check-certificate http://repository.egi.eu/sw/production/cas/1/current
 if [ x${os} == "xsl5" ] ; then
     wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
 	yum -y localinstall emi-release-3.0.0-2.el5.noarch.rpm
-	wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.16-1.noarch.rpm?raw=true
+	wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.17-1.noarch.rpm?raw=true
 elif  [ x${os} == "xsl6" ] ; then
 	wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
 	yum -y localinstall emi-release-3.0.0-2.el6.noarch.rpm
-	wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.16-1.el6.noarch.rpm?raw=true
+	wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/canl-java-tomcat-0.1.17-1.el6.noarch.rpm?raw=true
 fi
 
 #get the canl-java-tomcat repo

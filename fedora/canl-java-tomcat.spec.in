@@ -94,11 +94,6 @@ elif [ ${tomcat_ver}x == "tomcat6x" ] ; then
 	else
 		echo "/usr/share/java/commons-io.jar not found, cannot link it to the tomcat server/lib"
 	fi
-	if [ -f /usr/share/java/commons-logging.jar ] ; then 
-		ln -snf /usr/share/java/commons-logging.jar /usr/share/tomcat6/lib/commons-logging-new.jar
-	else
-		echo "/usr/share/java/commons-logging.jar not found, cannot link it to the tomcat server/lib"
-	fi
 	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.].*\.jar"`
 	if [ -f /usr/share/java/canl.jar ] ; then 
 		ln -snf /usr/share/java/canl.jar /usr/share/tomcat6/lib/canl-new.jar
@@ -123,14 +118,13 @@ if [ "$1" = "0" ] ; then
 		rm -f /usr/share/tomcat6/lib/%{name}-new.jar
 		rm -f /usr/share/tomcat6/lib/bcprov-new.jar
 		rm -f /usr/share/tomcat6/lib/commons-io-new.jar
-		rm -f /usr/share/tomcat6/lib/commons-logging-new.jar
 		rm -f /usr/share/tomcat6/lib/canl-new.jar
 	fi
 fi
 
 
 %changelog
-* Tue Sep 16 2013 Joni Hahkala <joni.hahkala@cern.ch> 0.1.16-1
+* Tue Sep 16 2013 Joni Hahkala <joni.hahkala@cern.ch> 0.1.17-1
 - Bug fix for preun removing links during upgrade, changed to postun and only run when
   last version is removed. Change the name of links as the old version removes the old
   named links.
