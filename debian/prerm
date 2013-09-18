@@ -3,7 +3,7 @@ set -e
 if [ -d /var/lib/tomcat6/ ] ; then
 	rm -f /var/lib/tomcat6/common/bcprov.jar
 	rm -f /var/lib/tomcat6/common/%{name}.jar
-	rm -f /var/lib/tomcat6/common/canl-java.jar
+	rm -f /var/lib/tomcat6/common/canl.jar
 else
 	echo No tomcat6 installation found, cannot remove the links to necessary jar files.
 fi
