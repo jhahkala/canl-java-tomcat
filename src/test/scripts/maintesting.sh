@@ -112,8 +112,8 @@ fi
 cd ~/canl-java-tomcat/src/test/scripts
 
 # temporary fix for yaim, remove when yaim is updated
-#cp config_secure_tomcat /opt/glite/yaim/functions/
-#cp site-info.pre /opt/glite/yaim/defaults/
+cp config_secure_tomcat /opt/glite/yaim/functions/
+cp site-info.pre /opt/glite/yaim/defaults/
 
 # config default with yaim 
 echo "#" >site-info.def
