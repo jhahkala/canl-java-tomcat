@@ -102,7 +102,7 @@ cat $certdir/trusted-certs/trusted_client.cert $certdir/trusted-certs/trusted_cl
 
 
 echo "put in example web page"
-rpm -qa |grep tomcat5
+ls /etc/tomcat* |grep tomcat5
 RES=$?
 if [ $RES = 0 ]; then
     export TOMCAT_SERVICE=tomcat5

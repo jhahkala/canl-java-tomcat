@@ -12,11 +12,8 @@ if [ -d /var/lib/tomcat6 ] ; then
 # link the unversioned canl lib, and if not present, link the versioned jar file.
 # At the time of writing the unversioned link is missing.
 
-	canl_jar=`ls /usr/share/java/canl-* |grep "canl-[0-9\.]*\.jar"`
 	if [ -f /usr/share/java/canl-java.jar ] ; then 
 		ln -snf /usr/share/java/canl-java.jar /var/lib/tomcat6/common/canl-java.jar
-	elif [ -f ${canl_jar} ] ; then 
-		ln -snf ${canl_jar} /var/lib/tomcat6/common/canl-java.jar
 	else
 		echo /usr/share/java/canl-java.jar not found, cannot link it to the tomcat server/lib
 	fi
