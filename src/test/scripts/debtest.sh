@@ -20,6 +20,14 @@ apt-get install libcanl-java-tomcat
 
 cp server.xml log4j-trustmanager.properties /etc/tomcat6
 
+if [ ! -d /root/certs ] ; then
+	git clone https://github.com/jhahkala/test-certs.git
+    cd test-certs
+    bin/generate-test-certificates.sh --all --voms /root/certs >/root/certs.log 2>&1
+
+    cd ~
+fi
+
 ./test-setup.sh --certdir /root/certs/
 
 service tomcat6 start

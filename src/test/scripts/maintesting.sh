@@ -93,8 +93,8 @@ cd ~
 rm -f /var/log/tomcat${tomcat_version}/*
 
 # check out the test cert generation stuff and generate test certs
-export CVSROOT=":pserver:anonymous@glite.cvs.cern.ch:/cvs/glite"
-export CVS_RSH=ssh
+#export CVSROOT=":pserver:anonymous@glite.cvs.cern.ch:/cvs/glite"
+#export CVS_RSH=ssh
 
 if [ ! -d /root/certs ] ; then
 	git clone https://github.com/jhahkala/test-certs.git
