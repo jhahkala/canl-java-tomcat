@@ -6,7 +6,7 @@ echo "#### EGI Trust Anchor Distribution ####" >> /etc/apt/sources.list
 echo deb http://repository.egi.eu/sw/production/cas/1/current egi-igtf core >> /etc/apt/sources.list
 
 apt-get update
-apt-get install ca-policy-egi-core
+apt-get -y install ca-policy-egi-core
 
 wget -q   -O - http://emisoft.web.cern.ch/emisoft/dist/EMI/3/RPM-GPG-KEY-emi | apt-key add -
 
@@ -18,7 +18,7 @@ apt-get -y install git
 apt-get -y install tomcat6
 	
 wget https://github.com/jhahkala/canl-java-tomcat/blob/gh-pages/packages/libcanl-java-tomcat_0.1.17-1_all.deb?raw=true
-dpkg -i libcanl-java-tomcat*
+dpkg -iy libcanl-java-tomcat*
 
 cp server.xml log4j-trustmanager.properties /etc/tomcat6
 
