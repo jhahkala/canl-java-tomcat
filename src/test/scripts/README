@@ -1,0 +1,138 @@
+Old information for reference at the bottom "Guidlines for certifying Trustmanager"
+
+Testing scripts for canl-java-tomcat
+------------------------------------
+
+For running the tests on sl5 or sl6, just copy the file run.sh to a clean sl5/6 machine/VM and run it.
+For running the tests on debian, just copy the rundeb.sh to a clean debian machine/VM and run it.
+
+The run* scripts will install git and download the canl-java-tomcat project form github,
+change to the canl-java-tomcat/src/test/scripts directorty and run the maintesting.sh in
+sl5/6 and debtest.sh on debian. These scripts will install the necessary software, certs
+etc, generate test certs, setup tests and run the certificate-tests.sh to test the 
+functionality. Then the scripts will advance the machine clock by 2x70min and run the 
+certificate-tests-1h.sh to test the expiration etc.
+
+config_secure_tomcat and site-info-pre are a patch for yaim to configure the tomcat.
+
+server.xml is the server.xml used for debian as there is no yaim for debian.
+
+testcerts.txt is the list of certs to handle when setting up the tests.
+
+
+
+
+Guidlines for certifying Trustmanager
+=====================================
+
+For some background on Trustmanager go:
+https://twiki.cern.ch/twiki/bin/view/EGEE/TrustManager
+
+Basically trustmanager is a server side SSL connection handler which handles
+connections with grid certificates and proxies. It also has a client side
+library to form those connections.
+
+The testplan (currently https://twiki.cern.ch/twiki/bin/view/EGEE/TrustManager)
+has the description of the tests. Basically the test are separated to three
+parts. Server side certificate tests, server side API tests and client side API
+tests. NB! The API test are currently done using test programs shipped with
+Trustmanager. This is not ideal since they might not catch interface
+changes/bugs since they happen to be broken in the same build as Trustmanager.
+However, they are by far the simplest to use, and they are used because of time
+constraints. Future certifier (yes you), you can gladly write new API tests :).
+
+Server side certificate tests:
+These test use openssl's s_client to connect to the server with different types
+of certificates. Some connections should fail and some should succeed. These
+tests are certificate-tests.sh and certificate-tests+1h.sh
+
+Server side API tests:
+These use wget to get a page from a server test webapplet. This page contains
+the information trustmanager reports about the connecting client certificates.
+The information is parsed and checked against the certificates used. NB! If the
+webapp has changed you might need to revise the result parsing in the tests!
+These tests are in server-tests.sh
+
+Client side api tests:
+These test use a test client program shipped with trustmanager to connect to
+the test webservice interface with different types of client certificates, and
+server certificates. NB! Since the java command always returns 0, the test
+parse the output of the client. The checks might need to be revised if the
+output has changed. The tests are client-tests.sh and client-tests+1h.sh
+
+Since the tests use a lot of different certificate types, the certificate
+generation scripts from org.glite.security.test-utils are used. This is a
+requirement to run the tests. More info in the setup section.
+
+For now these tests are run with tomcat5 and SLC4, but it they should "almost"
+work on tomcat6. You need to do some configuration redifinitions in the
+beginnig of a few files (grep tomcat5 * should tell you where).
+
+These tests need to be run as root, since they play with
+/etc/grid-security/certificates and tomcat restarting.
+
+Certification 
+=============
+
+Since the trustmanger is used by many node types, the certification is split
+into these parts.
+
+1) Do the test setup (described soon)
+2) Run the tests included here
+3) For each node type, install it and check that the connection management
+works with the new Trustmanger, or ask someone to do it. The node types do not
+need to be thoroughly tested, only the SSL connection handling part.
+
+Setup
+=====
+The setup part is a bit tricky, but after that the tests should be relatively
+straightforward.
+
+To start install a mahcine with the patches and other necessary stuff (incl.
+tomcat). Install yaim-core and run
+/opt/glite/yaim/bin/yaim  -r -s site-info.def  -f config_secure_tomcat
+/opt/glite/yaim/bin/yaim  -r -s site-info.def  -f config_fetch_crl
+
+This should configure tomcat and trustmanager to the needed degree. You need to
+make one change in /etc/tomcat5/server.xml, add the line
+internalOverrideExpirationCheck="true"
+This is so that the server can run with expired certificates too, and is needed
+for the client tests.
+
+Then you need to check out org.glite.security.test-utils and run
+bin/generate-test-certificates.sh --all --voms with a destination directory
+where they are created. This might take a few minutes. NB! This script creates
+proxy certs, so you need to recreate the certificates if certification takes
+over 8 ours. This is no problem, you just need to clean the directory, run it
+and the test-setup.sh (mentioned later) again. 
+
+Finally, run test-setup.sh --certdir <the place where test-utils put the
+certificates>. This sets up the certificates for the tests. Note! The
+test-setup.sh creates an one hour CRL (to later test CRL expiration), so if
+you're not done before that, just rerun the same command.
+
+Testing
+=======
+
+The tests are split to three parts. The recommended running order is:
+certificate-tests.sh 
+server-tests.sh
+client-tests.sh
+
+All commands take arguments, run them with --help to display. The commmand also
+have some definable variables in the beginning of the file, these should work
+with the default values.
+
+All tests report if they pass or fail. Remeber that some of the test rely on
+parsing the output to check the outcome. If tests fail it might be because the
+output format has changed. Check this first.
+
+After running these tests you need to wait for an hour for the CRL to expire.
+You can run certificate-tests+1h.sh to check when they can be run. When the CRL
+has expired run:
+certificate-tests+1h.sh
+client-tests+1h.sh
+
+Note that since the tests play around with the certificates that are being
+used, if you Ctrl-C in the middle of a test you may leave the certificates in
+an unspecified state.
