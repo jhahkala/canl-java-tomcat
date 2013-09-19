@@ -1,4 +1,4 @@
-Old information for reference at the bottom "Guidlines for certifying Trustmanager"
+Old information for reference at the bottom "Guidelines for certifying Trustmanager"
 
 Testing scripts for canl-java-tomcat
 ------------------------------------
@@ -7,7 +7,7 @@ For running the tests on sl5 or sl6, just copy the file run.sh to a clean sl5/6 
 For running the tests on debian, just copy the rundeb.sh to a clean debian machine/VM and run it.
 
 The run* scripts will install git and download the canl-java-tomcat project form github,
-change to the canl-java-tomcat/src/test/scripts directorty and run the maintesting.sh in
+change to the canl-java-tomcat/src/test/scripts directory and run the maintesting.sh in
 sl5/6 and debtest.sh on debian. These scripts will install the necessary software, certs
 etc, generate test certs, setup tests and run the certificate-tests.sh to test the 
 functionality. Then the scripts will advance the machine clock by 2x70min and run the 
@@ -25,10 +25,13 @@ doesn't work without mangling the config files. Works also on debian, with error
 can be ignored. reboot is needed after the changes in the config files, restarting the
 network is not enough.
 
+server and client tests are not migrated as canl-java-tomcat is only about the tomcat
+authentication, not certificate handling etc in client side or servlet side.
 
 
-Guidlines for certifying Trustmanager
-=====================================
+
+Guidelines for certifying Trustmanager
+======================================
 
 For some background on Trustmanager go:
 https://twiki.cern.ch/twiki/bin/view/EGEE/TrustManager
