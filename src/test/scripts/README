@@ -19,6 +19,11 @@ server.xml is the server.xml used for debian as there is no yaim for debian.
 
 testcerts.txt is the list of certs to handle when setting up the tests.
 
+setnet.sl6.sh can be used to fix the network after cloning in sl6, as sl6 is stupid and
+sets the cloned network interface as eth1, when all configs point to eth0, thus network
+doesn't work without mangling the config files. Works also on debian, with errors that 
+can be ignored. reboot is needed after the changes in the config files, restarting the
+network is not enough.
 
 
 
